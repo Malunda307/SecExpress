@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+  <meta name="theme-color" content="#f0faf4"/>
+  <meta name="color-scheme" content="light only"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <title>SecExpress</title>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="icon" type="image/png" href="icon-192.png"/>
+  <link rel="apple-touch-icon" href="icon-192.png"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      color-scheme: light only;
+      --bg: #f0faf4;
+      --white: #ffffff;
+      --ink: #1a2e1f;
+      --ink2: #4a6050;
+      --ink3: #8aaa90;
+      --border: #d4ead9;
+      --green: #1e7a3e;
+      --green-light: #e8f7ed;
+      --green-mid: #c2e8cc;
+      --orange: #b85c00;
+      --orange-light: #fff3e6;
+      --blue: #1a4a8a;
+      --blue-light: #e8f0fb;
+      --red: #c01a1a;
+      --red-light: #fdeaea;
+      --shadow: 0 4px 20px rgba(30,122,62,0.08);
+      --shadow-lg: 0 12px 40px rgba(30,122,62,0.15);
+      --radius: 20px;
+      --radius-sm: 14px;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, 'Segoe UI', sans-serif;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      overflow: hidden;
+    }
+
+    #app {
+      display: flex;
+      flex-direction: column;
+      height: 100dvh;
+      max-width: 430px;
+      margin: 0 auto;
+      background: var(--bg);
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--white);
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      box-shadow: var(--shadow);
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .logo-main {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--ink);
+      letter-spacing: -0.5px;
+    }
+
+    .logo-main span { color: var(--green); }
+
+    .logo-sub {
+      font-size: 11px;
+      color: var(--ink3);
+      margin-top: 1px;
+    }
+
+    .header-right { display: flex; align-items: center; gap: 8px; }
+
+    .lang-toggle {
+      display: flex;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .lang-btn {
+      padding: 7px 12px;
+      border: none;
+      background: transparent;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink3);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .lang-btn.active { background: var(--green); color: white; }
+
+    .btn-add {
+      width: 44px; height: 44px;
+      background: var(--green);
+      border: none;
+      border-radius: 14px;
+      color: white;
+      font-size: 26px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: transform 0.15s;
+      box-shadow: 0 4px 12px rgba(30,122,62,0.3);
+      flex-shrink: 0;
+    }
+
+    .btn-add:active { transform: scale(0.92); }
+
+    /* Laverie bar */
+    .laverie-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: var(--green-light);
+      border: 1.5px solid var(--green-mid);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      margin-bottom: 12px;
+    }
+
+    .laverie-dot {
+      width: 8px; height: 8px;
+      background: var(--green);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .laverie-name-bar {
+      font-weight: 700;
+      font-size: 14px;
+      flex: 1;
+      color: var(--green);
+    }
+
+    .laverie-change {
+      font-size: 12px;
+      color: var(--ink3);
+    }
+
+    /* Stats */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .stat {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 6px;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-weight: 900;
+      font-size: 22px;
+      line-height: 1;
+      margin-bottom: 3px;
+    }
+
+    .stat-emoji { font-size: 14px; margin-bottom: 2px; }
+
+    .stat-label {
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--ink3);
+    }
+
+    .c-green { color: var(--green); }
+    .c-orange { color: var(--orange); }
+    .c-blue { color: var(--blue); }
+    .c-ink { color: var(--ink); }
+
+    /* ── TABS ── */
+    .tabs-wrap {
+      background: var(--white);
+      padding: 0 16px;
+      display: flex;
+      gap: 4px;
+      border-bottom: 1.5px solid var(--border);
+      overflow-x: auto;
+      scrollbar-width: none;
+      flex-shrink: 0;
+    }
+
+    .tabs-wrap::-webkit-scrollbar { display: none; }
+
+    .tab {
+      padding: 14px 16px;
+      border: none;
+      background: transparent;
+      color: var(--ink3);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      white-space: nowrap;
+      transition: all 0.2s;
+      margin-bottom: -1.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tab.active {
+      color: var(--green);
+      border-bottom-color: var(--green);
+    }
+
+    .tab-count {
+      background: var(--green-light);
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 20px;
+      display: none;
+    }
+
+    .tab.active .tab-count { display: inline; }
+
+    /* ── SEARCH ── */
+    .search-wrap {
+      padding: 12px 16px;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 16px;
+    }
+
+    .search-icon { font-size: 16px; flex-shrink: 0; }
+
+    .search-input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 15px;
+      color: var(--ink);
+      outline: none;
+    }
+
+    .search-input::placeholder { color: var(--ink3); }
+
+    /* ── LIST ── */
+    .list-wrap {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      scrollbar-width: none;
+    }
+
+    .list-wrap::-webkit-scrollbar { display: none; }
+
+    /* Empty */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 60%;
+      gap: 14px;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .empty-icon { font-size: 64px; }
+    .empty-title { font-size: 18px; font-weight: 700; color: var(--ink2); }
+    .empty-text { font-size: 14px; line-height: 1.7; color: var(--ink3); }
+
+    .empty-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--green);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 14px 24px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(30,122,62,0.3);
+      margin-top: 4px;
+    }
+
+    /* ── CLIENT CARD ── */
+    .client-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 12px;
+      animation: fadeUp 0.25s ease;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .card-color-bar { height: 5px; width: 100%; }
+    .card-color-bar.en-attente { background: var(--blue); }
+    .card-color-bar.en-cours { background: var(--orange); }
+    .card-color-bar.pret { background: var(--green); }
+    .card-color-bar.livre { background: #ccc; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-body { padding: 16px; }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .avatar {
+      width: 50px; height: 50px;
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .avatar.en-attente { background: var(--blue-light); color: var(--blue); }
+    .avatar.en-cours { background: var(--orange-light); color: var(--orange); }
+    .avatar.pret { background: var(--green-light); color: var(--green); }
+    .avatar.livre { background: #f0f0f0; color: #888; }
+
+    .client-info { flex: 1; min-width: 0; }
+
+    .client-name {
+      font-weight: 800;
+      font-size: 17px;
+      margin-bottom: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .client-tel {
+      font-size: 13px;
+      color: var(--ink3);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .badge {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .badge.en-attente { background: var(--blue-light); color: var(--blue); }
+    .badge.en-cours { background: var(--orange-light); color: var(--orange); }
+    .badge.pret { background: var(--green-light); color: var(--green); }
+    .badge.livre { background: #f0f0f0; color: #888; }
+
+    .card-note {
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 13px;
+      color: var(--ink2);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-prix {
+      background: var(--green-light);
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--green);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Action buttons — grands et lisibles */
+    .card-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .card-actions.one-col { grid-template-columns: 1fr; }
+    .card-actions.three-col { grid-template-columns: 1fr 1fr 1fr; }
+
+    .btn-action {
+      padding: 13px 10px;
+      border-radius: var(--radius-sm);
+      border: none;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s, opacity 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      line-height: 1.2;
+    }
+
+    .btn-action:active { transform: scale(0.96); opacity: 0.85; }
+
+    .btn-pret { background: var(--green-light); color: var(--green); }
+    .btn-cours { background: var(--orange-light); color: var(--orange); }
+    .btn-attente { background: var(--blue-light); color: var(--blue); }
+    .btn-livre { background: #f0f0f0; color: #666; }
+    .btn-wa { background: #e6f9ee; color: #1a7a3c; }
+    .btn-facture { background: #fff8e0; color: #8a6200; }
+    .btn-del { background: var(--red-light); color: var(--red); }
+
+    .card-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0 16px 14px;
+    }
+
+    /* ── OVERLAY / MODAL ── */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,30,15,0.5);
+      backdrop-filter: blur(6px);
+      z-index: 100;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+    }
+
+    .overlay.open { opacity: 1; pointer-events: all; }
+
+    .modal {
+      background: var(--white);
+      border-radius: 28px 28px 0 0;
+      padding: 24px 24px 50px;
+      width: 100%;
+      max-width: 430px;
+      transform: translateY(40px);
+      transition: transform 0.35s cubic-bezier(0.34,1.4,0.64,1);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .overlay.open .modal { transform: translateY(0); }
+
+    .modal-handle {
+      width: 36px; height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      margin: 0 auto 24px;
+    }
+
+    .modal-title {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+
+    .modal-subtitle {
+      font-size: 14px;
+      color: var(--ink3);
+      margin-bottom: 24px;
+    }
+
+    .field { margin-bottom: 16px; }
+
+    .field label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink2);
+      margin-bottom: 8px;
+    }
+
+    .field input {
+      width: 100%;
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      color: var(--ink);
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .field input:focus { border-color: var(--green); }
+    .field input::placeholder { color: var(--ink3); }
+
+    .modal-actions { display: flex; gap: 10px; margin-top: 24px; }
+
+    .btn-cancel {
+      flex: 1;
+      padding: 16px;
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--ink3);
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-confirm {
+      flex: 2;
+      padding: 16px;
+      background: var(--green);
+      border: none;
+      border-radius: var(--radius-sm);
+      color: white;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(30,122,62,0.3);
+      transition: transform 0.15s;
+    }
+
+    .btn-confirm:active { transform: scale(0.97); }
+
+    /* ── FACTURE MODAL ── */
+    .facture-modal {
+      background: var(--white);
+      border-radius: 28px 28px 0 0;
+      padding: 24px 20px 50px;
+      width: 100%;
+      max-width: 430px;
+      transform: translateY(40px);
+      transition: transform 0.35s cubic-bezier(0.34,1.4,0.64,1);
+      box-shadow: var(--shadow-lg);
+      max-height: 88dvh;
+      overflow-y: auto;
+    }
+
+    .overlay.open .facture-modal { transform: translateY(0); }
+
+    .facture-doc {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+
+    .facture-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 14px;
+      border-bottom: 2px solid var(--green);
+      margin-bottom: 16px;
+    }
+
+    .facture-brand { font-size: 20px; font-weight: 900; }
+    .facture-brand span { color: var(--green); }
+    .facture-brand-sub { font-size: 11px; color: var(--ink3); margin-top: 2px; }
+    .facture-num-label { font-size: 10px; color: var(--ink3); text-align: right; text-transform: uppercase; }
+    .facture-num-val { font-weight: 800; font-size: 13px; color: var(--ink); text-align: right; }
+    .facture-date { font-size: 11px; color: var(--ink3); text-align: right; margin-top: 2px; }
+
+    .facture-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+
+    .facture-row:last-of-type { border-bottom: none; }
+    .facture-row-label { color: var(--ink3); }
+    .facture-row-val { font-weight: 700; color: var(--ink); }
+
+    .facture-total-box {
+      background: var(--green-light);
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+    }
+
+    .facture-total-label { font-weight: 700; font-size: 15px; color: var(--green); }
+    .facture-total-val { font-weight: 900; font-size: 22px; color: var(--green); }
+
+    .facture-code-box {
+      background: var(--white);
+      border: 2px dashed var(--green-mid);
+      border-radius: 12px;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 12px;
+    }
+
+    .facture-code-label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--ink3); }
+    .facture-code-val { font-family: monospace; font-weight: 900; font-size: 15px; color: var(--ink); letter-spacing: 1px; }
+    .facture-footer { font-size: 12px; color: var(--ink3); text-align: center; margin-top: 14px; }
+
+    .btn-send-wa {
+      width: 100%;
+      padding: 16px;
+      background: #25a244;
+      border: none;
+      border-radius: var(--radius-sm);
+      color: white;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 12px rgba(37,162,68,0.3);
+    }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--ink);
+      color: white;
+      border-radius: 30px;
+      padding: 13px 22px;
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+      z-index: 200;
+      transition: transform 0.3s cubic-bezier(0.34,1.4,0.64,1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .toast.show { transform: translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-top">
+      <div>
+        <div class="logo-main">Sec<span>Express</span></div>
+        <div class="logo-sub" id="lbl-slogan"></div>
+      </div>
+      <div class="header-right">
+        <div class="lang-toggle">
+          <button class="lang-btn" onclick="setLang('fr')">FR</button>
+          <button class="lang-btn" onclick="setLang('rw')">RW</button>
+        </div>
+        <button class="btn-add" onclick="openModal()" id="btn-add-main">+</button>
+      </div>
+    </div>
+
+    <div class="laverie-bar" onclick="changeLaverie()">
+      <div class="laverie-dot"></div>
+      <div class="laverie-name-bar" id="laverie-name">Ma Laverie</div>
+      <div class="laverie-change" id="lbl-modifier">⚙️</div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-emoji">👔</div>
+        <div class="stat-num c-ink" id="stat-total">0</div>
+        <div class="stat-label" id="lbl-total">Total</div>
+      </div>
+      <div class="stat">
+        <div class="stat-emoji">⏳</div>
+        <div class="stat-num c-blue" id="stat-attente">0</div>
+        <div class="stat-label" id="lbl-attente">Attente</div>
+      </div>
+      <div class="stat">
+        <div class="stat-emoji">🔄</div>
+        <div class="stat-num c-orange" id="stat-cours">0</div>
+        <div class="stat-label" id="lbl-cours">En cours</div>
+      </div>
+      <div class="stat">
+        <div class="stat-emoji">✅</div>
+        <div class="stat-num c-green" id="stat-pret">0</div>
+        <div class="stat-label" id="lbl-pret">Prets</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- TABS -->
+  <div class="tabs-wrap">
+    <button class="tab active" onclick="setFilter('tous',this)" id="tab-tous">
+      <span>👔</span><span id="tab-tous-txt"></span><span class="tab-count" id="count-tous">0</span>
+    </button>
+    <button class="tab" onclick="setFilter('en-attente',this)" id="tab-attente">
+      <span>⏳</span><span id="tab-attente-txt"></span><span class="tab-count" id="count-attente">0</span>
+    </button>
+    <button class="tab" onclick="setFilter('en-cours',this)" id="tab-encours">
+      <span>🔄</span><span id="tab-encours-txt"></span><span class="tab-count" id="count-encours">0</span>
+    </button>
+    <button class="tab" onclick="setFilter('pret',this)" id="tab-pret">
+      <span>✅</span><span id="tab-pret-txt"></span><span class="tab-count" id="count-pret">0</span>
+    </button>
+    <button class="tab" onclick="setFilter('livre',this)" id="tab-livre">
+      <span>📦</span><span id="tab-livre-txt"></span><span class="tab-count" id="count-livre">0</span>
+    </button>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="search-wrap">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" id="search" type="text" oninput="render()"/>
+    </div>
+  </div>
+
+  <!-- LIST -->
+  <div class="list-wrap">
+    <div class="empty-state" id="empty-state">
+      <div class="empty-icon">🧺</div>
+      <div class="empty-title" id="lbl-empty-title">Aucun client</div>
+      <div class="empty-text" id="lbl-empty">Appuie sur le bouton vert pour ajouter votre premier client.</div>
+      <button class="empty-btn" onclick="openModal()">
+        <span>+</span> <span id="lbl-empty-btn">Ajouter un client</span>
+      </button>
+    </div>
+    <div id="client-list"></div>
+  </div>
+</div>
+
+<!-- Modal ajout client -->
+<div class="overlay" id="overlay" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="lbl-modal-title">Nouveau client</div>
+    <div class="modal-subtitle" id="lbl-modal-sub">Remplissez les informations du client</div>
+
+    <div class="field">
+      <label><span>👤</span> <span id="lbl-nom">Nom complet</span></label>
+      <input id="input-nom" type="text"/>
+    </div>
+    <div class="field">
+      <label><span>📱</span> <span id="lbl-tel">Numero WhatsApp</span></label>
+      <input id="input-numero" type="tel" placeholder="243812345678"/>
+    </div>
+    <div class="field">
+      <label><span>👕</span> <span id="lbl-articles">Articles</span></label>
+      <input id="input-note" type="text"/>
+    </div>
+    <div class="field">
+      <label><span>💰</span> <span id="lbl-prix-label">Prix total</span></label>
+      <input id="input-prix" type="number" min="0" placeholder="0"/>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()" id="lbl-annuler">Annuler</button>
+      <button class="btn-confirm" onclick="addClient()" id="lbl-ajouter">✅ Ajouter</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal parametres laverie -->
+<div class="overlay" id="overlay-lav" onclick="closeLavOutside(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="lbl-lav-title">Parametres</div>
+    <div class="modal-subtitle" id="lbl-lav-sub">Personnalisez votre laverie</div>
+
+    <div class="field">
+      <label><span>🏪</span> <span id="lbl-lav-label">Nom de la laverie</span></label>
+      <input id="input-lav" type="text"/>
+    </div>
+    <div class="field">
+      <label><span>💵</span> <span id="lbl-devise-label">Devise</span></label>
+      <input id="input-devise" type="text" placeholder="CDF"/>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeLav()" id="lbl-lav-annuler">Annuler</button>
+      <button class="btn-confirm" onclick="saveLaverie()" id="lbl-lav-save">💾 Sauvegarder</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Facture -->
+<div class="overlay" id="overlay-facture" onclick="closeFactureOutside(event)">
+  <div class="facture-modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="lbl-facture-title">Facture</div>
+    <div class="modal-subtitle" id="lbl-facture-sub">Envoyez la facture au client</div>
+    <div class="facture-doc" id="facture-doc"></div>
+    <button class="btn-send-wa" onclick="sendFactureWA()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <span id="lbl-send-facture">Envoyer via WhatsApp</span>
+    </button>
+    <button class="btn-cancel" style="width:100%;padding:14px;border-radius:14px;" onclick="closeFacture()">
+      <span id="lbl-fermer-facture">Fermer</span>
+    </button>
+  </div>
+</div>
+
+<div class="toast" id="toast"><span id="toast-icon"></span> <span id="toast-msg"></span></div>
+
+<script>
+// ── TRADUCTIONS ──
+const T = {
+  fr: {
+    slogan: 'Gestion de laverie',
+    modifier: '⚙️ Parametres',
+    total:'Total', attente:'Attente', cours:'En cours', pret:'Prets',
+    tabTous:'Tous', tabAttente:'Attente', tabCours:'En cours', tabPret:'Prets', tabLivre:'Livres',
+    search: 'Chercher un client...',
+    emptyTitle: 'Aucun client pour l\'instant',
+    empty: 'Appuie sur le bouton vert pour ajouter votre premier client.',
+    emptyBtn: 'Ajouter un client',
+    modalTitle: 'Nouveau client',
+    modalSub: 'Remplissez les informations du client',
+    nom: 'Nom complet', tel: 'Numero WhatsApp',
+    articles: 'Articles (chemises, pantalons...)',
+    prixLabel: 'Prix total a payer',
+    annuler: 'Annuler', ajouter: 'Ajouter',
+    lavTitle: 'Parametres laverie', lavSub: 'Personnalisez votre laverie',
+    lavLabel: 'Nom de la laverie', deviseLabel: 'Devise (CDF, USD...)',
+    lavSave: 'Sauvegarder',
+    factureTitle: 'Facture prete',
+    factureSub: 'Envoyez la facture au client via WhatsApp',
+    sendFacture: 'Envoyer la facture via WhatsApp',
+    fermerFacture: 'Fermer',
+    status: { 'en-attente':'En attente','en-cours':'En cours','pret':'Pret','livre':'Livre' },
+    btnCours: 'Lancer le lavage',
+    btnPret: 'Marquer pret',
+    btnAttente: 'Remettre en attente',
+    btnLivre: 'Marque comme livre',
+    btnRetour: 'Retour en cours',
+    btnWA: 'Envoyer message',
+    btnFacture: 'Voir facture',
+    btnSuppr: 'Supprimer',
+    toastAjout: 'ajoute avec succes',
+    toastStatut: 'Statut mis a jour',
+    toastNom: 'Parametres sauvegardes',
+    toastWA: 'WhatsApp ouvert',
+    toastSuppr: 'Client supprime',
+    erreur: 'Veuillez saisir le nom et le numero',
+    factDocTitle: 'FACTURE',
+    factClient: 'Client',
+    factArticles: 'Articles',
+    factPrix: 'Prix',
+    factTotal: 'TOTAL A PAYER',
+    factCode: 'Code de retrait',
+    factMerci: 'Merci de faire confiance a SecExpress !',
+    wa: {
+      'en-attente': n=>`Bonjour ${n},\n\nVotre commande a bien ete enregistree chez SecExpress.\nNous vous contacterons quand vos habits seront prets.\n\nMerci !`,
+      'en-cours':   n=>`Bonjour ${n},\n\nVos habits sont en cours de lavage chez SecExpress.\nMerci de patienter, nous vous contacterons quand c\'est pret.\n\nMerci !`,
+      'livre':      n=>`Bonjour ${n},\n\nVos habits ont ete livres avec succes.\nMerci de faire confiance a SecExpress !\n\nA bientot !`
+    }
+  },
+  rw: {
+    slogan: 'Gucunga imyambaro',
+    modifier: '⚙️ Igenamiterere',
+    total:'Yose', attente:'Gutegereza', cours:'Igikorwa', pret:'Biteguye',
+    tabTous:'Yose', tabAttente:'Gutegereza', tabCours:'Igikorwa', tabPret:'Biteguye', tabLivre:'Byatanzwe',
+    search: 'Shakisha umukiriya...',
+    emptyTitle: 'Nta bakiriya baracyandikwa',
+    empty: 'Kanda buto y\'icyatsi kugirango wongeraho umukiriya wa mbere.',
+    emptyBtn: 'Ongeraho umukiriya',
+    modalTitle: 'Umukiriya mushya',
+    modalSub: 'Uzuza amakuru y\'umukiriya',
+    nom: 'Amazina yuzuye', tel: 'Nimero ya WhatsApp',
+    articles: 'Imyambaro (ikofu, ipantaro...)',
+    prixLabel: 'Igiciro cyose',
+    annuler: 'Reka', ajouter: 'Ongeraho',
+    lavTitle: 'Igenamiterere', lavSub: 'Hindura amakuru ya laverie yawe',
+    lavLabel: 'Izina rya laverie', deviseLabel: 'Ifaranga (RWF, USD...)',
+    lavSave: 'Bika',
+    factureTitle: 'Fagitire iteguye',
+    factureSub: 'Ohereza fagitire umukiriya kuri WhatsApp',
+    sendFacture: 'Ohereza fagitire kuri WhatsApp',
+    fermerFacture: 'Funga',
+    status: { 'en-attente':'Gutegereza','en-cours':'Igikorwa','pret':'Biteguye','livre':'Byatanzwe' },
+    btnCours: 'Tangira gukaraba',
+    btnPret: 'Imyambaro iteguye',
+    btnAttente: 'Subira mu gutegereza',
+    btnLivre: 'Yatanzwe',
+    btnRetour: 'Subira mu gikorwa',
+    btnWA: 'Ohereza ubutumwa',
+    btnFacture: 'Reba fagitire',
+    btnSuppr: 'Siba',
+    toastAjout: 'yongeweho neza',
+    toastStatut: 'Imiterere yahinduwe',
+    toastNom: 'Igenamiterere ribitswe',
+    toastWA: 'WhatsApp ifunguye',
+    toastSuppr: 'Umukiriya yasibwe',
+    erreur: 'Andika amazina n\'inomero',
+    factDocTitle: 'FAGITIRE',
+    factClient: 'Umukiriya',
+    factArticles: 'Imyambaro',
+    factPrix: 'Igiciro',
+    factTotal: 'IGITERANYO',
+    factCode: 'Kode yo gusubira',
+    factMerci: 'Murakoze gukoresha SecExpress !',
+    wa: {
+      'en-attente': n=>`Muraho ${n},\n\nIturusha ryanyu ryakiririwe neza muri SecExpress.\nTuzabimenyesha igihe imyambaro yanyu izaba iteguye.\n\nMurakoze !`,
+      'en-cours':   n=>`Muraho ${n},\n\nImyambaro yanyu iri gukarawa muri SecExpress.\nMwihangane, tuzabimenyesha igihe bitegurwa.\n\nMurakoze !`,
+      'livre':      n=>`Muraho ${n},\n\nImyambaro yanyu yatanzwe neza.\nMurakoze gukoresha SecExpress !\n\nMugire amahoro !`
+    }
+  }
+};
+
+let lang = localStorage.getItem('sec_lang') || 'fr';
+let clients = JSON.parse(localStorage.getItem('sec_clients') || '[]');
+let filter = 'tous';
+let currentFactureId = null;
+
+// ── LANGUE ──
+function setLang(l) {
+  lang = l;
+  localStorage.setItem('sec_lang', l);
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.lang-btn').forEach(b => { if(b.textContent === l.toUpperCase()) b.classList.add('active'); });
+  applyLang(); render();
+}
+
+function s(id, txt) { const el = document.getElementById(id); if(el) el.textContent = txt; }
+function h(id, htm) { const el = document.getElementById(id); if(el) el.innerHTML = htm; }
+
+function applyLang() {
+  const t = T[lang];
+  s('lbl-slogan', t.slogan); s('lbl-modifier', t.modifier);
+  s('lbl-total', t.total); s('lbl-attente', t.attente); s('lbl-cours', t.cours); s('lbl-pret', t.pret);
+  s('tab-tous-txt', t.tabTous); s('tab-attente-txt', t.tabAttente);
+  s('tab-encours-txt', t.tabCours); s('tab-pret-txt', t.tabPret); s('tab-livre-txt', t.tabLivre);
+  document.getElementById('search').placeholder = t.search;
+  s('lbl-empty-title', t.emptyTitle); s('lbl-empty', t.empty); s('lbl-empty-btn', t.emptyBtn);
+  s('lbl-modal-title', t.modalTitle); s('lbl-modal-sub', t.modalSub);
+  s('lbl-nom', t.nom); s('lbl-tel', t.tel); s('lbl-articles', t.articles); s('lbl-prix-label', t.prixLabel);
+  s('lbl-annuler', t.annuler); s('lbl-ajouter', '✅ ' + t.ajouter);
+  s('lbl-lav-title', t.lavTitle); s('lbl-lav-sub', t.lavSub);
+  s('lbl-lav-label', t.lavLabel); s('lbl-devise-label', t.deviseLabel);
+  s('lbl-lav-annuler', t.annuler); s('lbl-lav-save', '💾 ' + t.lavSave);
+  s('lbl-facture-title', t.factureTitle); s('lbl-facture-sub', t.factureSub);
+  s('lbl-send-facture', t.sendFacture); s('lbl-fermer-facture', t.fermerFacture);
+  const nom_ph = lang==='fr' ? 'exemple: Malunda Eveline' : 'urugero: Uwimana Jean';
+  const art_ph = lang==='fr' ? 'exemple: 3 chemises, 1 pantalon' : 'urugero: ipantaro 1, ikofu 3';
+  document.getElementById('input-nom').placeholder = nom_ph;
+  document.getElementById('input-note').placeholder = art_ph;
+}
+
+// ── LAVERIE ──
+document.getElementById('laverie-name').textContent = localStorage.getItem('sec_lav_name') || 'Ma Laverie';
+
+function changeLaverie() {
+  document.getElementById('input-lav').value = localStorage.getItem('sec_lav_name') || '';
+  document.getElementById('input-devise').value = localStorage.getItem('sec_devise') || 'CDF';
+  document.getElementById('overlay-lav').classList.add('open');
+  setTimeout(() => document.getElementById('input-lav').focus(), 350);
+}
+function closeLav() { document.getElementById('overlay-lav').classList.remove('open'); }
+function closeLavOutside(e) { if(e.target===document.getElementById('overlay-lav')) closeLav(); }
+function saveLaverie() {
+  const n = document.getElementById('input-lav').value.trim();
+  const d = document.getElementById('input-devise').value.trim() || 'CDF';
+  if(!n) return;
+  localStorage.setItem('sec_lav_name', n);
+  localStorage.setItem('sec_devise', d);
+  document.getElementById('laverie-name').textContent = n;
+  closeLav();
+  showToast('🏪', T[lang].toastNom);
+}
+
+// ── FILTER ──
+function setFilter(f, el) {
+  filter = f;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  render();
+}
+
+// ── MODAL AJOUT ──
+function openModal() {
+  document.getElementById('overlay').classList.add('open');
+  setTimeout(() => document.getElementById('input-nom').focus(), 350);
+}
+function closeModal() {
+  document.getElementById('overlay').classList.remove('open');
+  ['input-nom','input-numero','input-note','input-prix'].forEach(id => document.getElementById(id).value='');
+}
+function closeModalOutside(e) { if(e.target===document.getElementById('overlay')) closeModal(); }
+
+// ── ADD ──
+function addClient() {
+  const nom = document.getElementById('input-nom').value.trim();
+  const numero = document.getElementById('input-numero').value.trim().replace(/\s+/g,'');
+  const note = document.getElementById('input-note').value.trim();
+  const prix = parseFloat(document.getElementById('input-prix').value) || 0;
+  if(!nom||!numero) { showToast('⚠️', T[lang].erreur); return; }
+  const token = 'SEC-' + Date.now().toString(36).toUpperCase();
+  clients.unshift({
+    id: Date.now(), nom, numero, note, prix, token,
+    statut: 'en-attente',
+    heure: new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}),
+    date: new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'})
+  });
+  save(); closeModal(); render();
+  showToast('✅', `${nom} ${T[lang].toastAjout}`);
+}
+
+// ── STATUS ──
+function setStatut(id, statut) {
+  const c = clients.find(x=>x.id===id); if(!c) return;
+  c.statut = statut; save(); render();
+  showToast('🔄', T[lang].toastStatut);
+  if(statut === 'pret') setTimeout(() => openFacture(id), 400);
+}
+
+// ── FACTURE ──
+function openFacture(id) {
+  const c = clients.find(x=>x.id===id); if(!c) return;
+  if(!c.token) { c.token = 'SEC-' + c.id.toString(36).toUpperCase(); save(); }
+  currentFactureId = id;
+  const t = T[lang];
+  const lavName = localStorage.getItem('sec_lav_name') || 'SecExpress';
+  const devise = localStorage.getItem('sec_devise') || 'CDF';
+  const prix = c.prix || 0;
+
+  document.getElementById('facture-doc').innerHTML = `
+    <div class="facture-header">
+      <div>
+        <div class="facture-brand">Sec<span>Express</span></div>
+        <div class="facture-brand-sub">🏪 ${lavName}</div>
+      </div>
+      <div>
+        <div class="facture-num-label">${t.factDocTitle}</div>
+        <div class="facture-num-val">${c.token}</div>
+        <div class="facture-date">📅 ${c.date} ${c.heure}</div>
+      </div>
+    </div>
+    <div class="facture-row">
+      <span class="facture-row-label">👤 ${t.factClient}</span>
+      <span class="facture-row-val">${c.nom}</span>
+    </div>
+    <div class="facture-row">
+      <span class="facture-row-label">📱 Tel</span>
+      <span class="facture-row-val">${c.numero}</span>
+    </div>
+    <div class="facture-row">
+      <span class="facture-row-label">👕 ${t.factArticles}</span>
+      <span class="facture-row-val">${c.note || 'Habits'}</span>
+    </div>
+    <div class="facture-total-box">
+      <span class="facture-total-label">💰 ${t.factTotal}</span>
+      <span class="facture-total-val">${prix.toLocaleString()} ${devise}</span>
+    </div>
+    <div class="facture-code-box">
+      <span class="facture-code-label">🎫 ${t.factCode}</span>
+      <span class="facture-code-val">${c.token}</span>
+    </div>
+    <div class="facture-footer">${t.factMerci}</div>
+  `;
+  document.getElementById('overlay-facture').classList.add('open');
+}
+
+function closeFacture() { document.getElementById('overlay-facture').classList.remove('open'); }
+function closeFactureOutside(e) { if(e.target===document.getElementById('overlay-facture')) closeFacture(); }
+
+function sendFactureWA() {
+  const c = clients.find(x=>x.id===currentFactureId); if(!c) return;
+  const t = T[lang];
+  const lavName = localStorage.getItem('sec_lav_name') || 'SecExpress';
+  const devise = localStorage.getItem('sec_devise') || 'CDF';
+  const prix = c.prix || 0;
+  const sep = '================================';
+  const msg =
+`${sep}
+   SECEXPRESS - ${lavName.toUpperCase()}
+${sep}
+${t.factDocTitle}: ${c.token}
+Date: ${c.date} | ${c.heure}
+${sep}
+${t.factClient}: ${c.nom}
+Tel: ${c.numero}
+${sep}
+${t.factArticles}: ${c.note || 'Habits'}
+${sep}
+${t.factTotal}: ${prix.toLocaleString()} ${devise}
+${sep}
+${t.factCode}: ${c.token}
+${sep}
+${t.factMerci}`;
+
+  window.open(`https://wa.me/${c.numero}?text=${encodeURIComponent(msg)}`, '_blank');
+  showToast('💬', T[lang].toastWA);
+}
+
+// ── WA normal ──
+function sendWA(id) {
+  const c = clients.find(x=>x.id===id); if(!c) return;
+  if(c.statut === 'pret') { openFacture(id); return; }
+  const msg = (T[lang].wa[c.statut] || T[lang].wa['en-cours'])(c.nom);
+  window.open(`https://wa.me/${c.numero}?text=${encodeURIComponent(msg)}`, '_blank');
+  showToast('💬', T[lang].toastWA);
+}
+
+// ── DELETE ──
+function deleteClient(id) {
+  if(!confirm(lang==='fr' ? 'Supprimer ce client ?' : 'Siba uyu mukiriya ?')) return;
+  const c = clients.find(x=>x.id===id);
+  clients = clients.filter(x=>x.id!==id);
+  save(); render();
+  showToast('🗑️', T[lang].toastSuppr);
+}
+
+function save() { localStorage.setItem('sec_clients', JSON.stringify(clients)); }
+
+// ── RENDER ──
+function render() {
+  const t = T[lang];
+  const q = document.getElementById('search').value.toLowerCase();
+  let filtered = filter==='tous' ? clients : clients.filter(c=>c.statut===filter);
+  if(q) filtered = filtered.filter(c=>c.nom.toLowerCase().includes(q)||c.numero.includes(q));
+
+  // Stats
+  const cn = (s) => clients.filter(c=>c.statut===s).length;
+  document.getElementById('stat-total').textContent = clients.length;
+  document.getElementById('stat-attente').textContent = cn('en-attente');
+  document.getElementById('stat-cours').textContent = cn('en-cours');
+  document.getElementById('stat-pret').textContent = cn('pret');
+
+  // Tab counts
+  document.getElementById('count-tous').textContent = clients.length;
+  document.getElementById('count-attente').textContent = cn('en-attente');
+  document.getElementById('count-encours').textContent = cn('en-cours');
+  document.getElementById('count-pret').textContent = cn('pret');
+  document.getElementById('count-livre').textContent = cn('livre');
+
+  const list = document.getElementById('client-list');
+  const empty = document.getElementById('empty-state');
+
+  if(filtered.length===0) { empty.style.display='flex'; list.innerHTML=''; return; }
+  empty.style.display='none';
+
+  const devise = localStorage.getItem('sec_devise') || 'CDF';
+
+  list.innerHTML = filtered.map(c => {
+    const initials = c.nom.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+    const prix = c.prix ? `${Number(c.prix).toLocaleString()} ${devise}` : '';
+    const s = c.statut;
+
+    // Boutons selon statut — grands et clairs
+    let actionBtns = '';
+    if(s === 'en-attente') {
+      actionBtns = `
+        <div class="card-actions">
+          <button class="btn-action btn-cours" onclick="setStatut(${c.id},'en-cours')">🔄 ${t.btnCours}</button>
+          <button class="btn-action btn-wa" onclick="sendWA(${c.id})">💬 ${t.btnWA}</button>
+        </div>
+        <div style="margin-top:8px">
+          <button class="btn-action btn-del" style="width:100%" onclick="deleteClient(${c.id})">🗑️ ${t.btnSuppr}</button>
+        </div>`;
+    } else if(s === 'en-cours') {
+      actionBtns = `
+        <div class="card-actions">
+          <button class="btn-action btn-pret" onclick="setStatut(${c.id},'pret')">✅ ${t.btnPret}</button>
+          <button class="btn-action btn-attente" onclick="setStatut(${c.id},'en-attente')">↩️ ${t.btnAttente}</button>
+        </div>
+        <div style="margin-top:8px;display:flex;gap:8px;">
+          <button class="btn-action btn-wa" style="flex:1" onclick="sendWA(${c.id})">💬 ${t.btnWA}</button>
+          <button class="btn-action btn-del" style="flex:1" onclick="deleteClient(${c.id})">🗑️ ${t.btnSuppr}</button>
+        </div>`;
+    } else if(s === 'pret') {
+      actionBtns = `
+        <div class="card-actions">
+          <button class="btn-action btn-livre" onclick="setStatut(${c.id},'livre')">📦 ${t.btnLivre}</button>
+          <button class="btn-action btn-facture" onclick="openFacture(${c.id})">🧾 ${t.btnFacture}</button>
+        </div>
+        <div style="margin-top:8px">
+          <button class="btn-action btn-cours" style="width:100%" onclick="setStatut(${c.id},'en-cours')">↩️ ${t.btnRetour}</button>
+        </div>`;
+    } else {
+      actionBtns = `
+        <div class="card-actions">
+          <button class="btn-action btn-facture" onclick="openFacture(${c.id})">🧾 ${t.btnFacture}</button>
+          <button class="btn-action btn-del" onclick="deleteClient(${c.id})">🗑️ ${t.btnSuppr}</button>
+        </div>`;
+    }
+
+    return `
+      <div class="client-card">
+        <div class="card-color-bar ${s}"></div>
+        <div class="card-body">
+          <div class="card-top">
+            <div class="avatar ${s}">${initials}</div>
+            <div class="client-info">
+              <div class="client-name">${c.nom}</div>
+              <div class="client-tel">📱 ${c.numero} &nbsp;·&nbsp; 🕐 ${c.heure}</div>
+            </div>
+            <span class="badge ${s}">${t.status[s]}</span>
+          </div>
+          ${c.note ? `<div class="card-note">👕 ${c.note}</div>` : ''}
+          ${prix ? `<div class="card-prix">💰 ${prix}</div>` : ''}
+          ${actionBtns}
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function showToast(icon, msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-icon').textContent = icon;
+  document.getElementById('toast-msg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2500);
+}
+
+// ── SERVICE WORKER ──
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  });
+}
+applyLang();
+setLang(lang);
+render();
+
+document.addEventListener('keydown', e => {
+  if(e.key==='Enter') {
+    if(document.getElementById('overlay').classList.contains('open')) addClient();
+    if(document.getElementById('overlay-lav').classList.contains('open')) saveLaverie();
+  }
+});
+</script>
+</body>
+</html>
