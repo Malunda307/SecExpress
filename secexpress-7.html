@@ -14,677 +14,284 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       color-scheme: light only;
-      --bg: #f0faf4;
-      --white: #ffffff;
-      --ink: #1a2e1f;
-      --ink2: #4a6050;
-      --ink3: #8aaa90;
-      --border: #d4ead9;
-      --green: #1e7a3e;
-      --green-light: #e8f7ed;
-      --green-mid: #c2e8cc;
-      --orange: #b85c00;
-      --orange-light: #fff3e6;
-      --blue: #1a4a8a;
-      --blue-light: #e8f0fb;
-      --red: #c01a1a;
-      --red-light: #fdeaea;
-      --shadow: 0 4px 20px rgba(30,122,62,0.08);
-      --shadow-lg: 0 12px 40px rgba(30,122,62,0.15);
-      --radius: 20px;
-      --radius-sm: 14px;
+      --bg: #f0faf4; --white: #fff;
+      --ink: #1a2e1f; --ink2: #4a6050; --ink3: #8aaa90;
+      --border: #d4ead9; --green: #1e7a3e; --gl: #e8f7ed; --gm: #c2e8cc;
+      --orange: #b85c00; --ol: #fff3e6;
+      --blue: #1a4a8a; --bl: #e8f0fb;
+      --red: #c01a1a; --rl: #fdeaea;
+      --sh: 0 4px 20px rgba(30,122,62,0.08);
+      --shl: 0 12px 40px rgba(30,122,62,0.15);
+      --r: 20px; --rs: 14px;
+      --nav: 72px;
     }
+    html,body { height:100%; background:var(--bg); color:var(--ink); font-family:-apple-system,'Segoe UI',sans-serif; font-size:16px; -webkit-font-smoothing:antialiased; overflow:hidden; }
 
-    html, body {
-      height: 100%;
-      background: var(--bg);
-      color: var(--ink);
-      font-family: -apple-system, 'Segoe UI', sans-serif;
-      font-size: 16px;
-      -webkit-font-smoothing: antialiased;
-      overflow: hidden;
-    }
-
-    #app {
-      display: flex;
-      flex-direction: column;
-      height: 100dvh;
-      max-width: 430px;
-      margin: 0 auto;
-      background: var(--bg);
-    }
+    /* ── APP SHELL ── */
+    #app { display:flex; flex-direction:column; height:100dvh; max-width:430px; margin:0 auto; background:var(--bg); position:relative; }
 
     /* ── HEADER ── */
-    header {
-      background: var(--white);
-      padding: 18px 20px 14px;
-      border-bottom: 1px solid var(--border);
-      flex-shrink: 0;
-      box-shadow: var(--shadow);
-    }
+    header { background:var(--white); padding:16px 20px 12px; border-bottom:1px solid var(--border); flex-shrink:0; box-shadow:var(--sh); }
+    .header-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+    .logo-main { font-size:24px; font-weight:900; letter-spacing:-0.5px; }
+    .logo-main span { color:var(--green); }
+    .logo-sub { font-size:11px; color:var(--ink3); margin-top:1px; }
+    .lang-toggle { display:flex; background:var(--bg); border:1.5px solid var(--border); border-radius:10px; overflow:hidden; }
+    .lang-btn { padding:7px 12px; border:none; background:transparent; font-size:12px; font-weight:700; color:var(--ink3); cursor:pointer; transition:all 0.2s; }
+    .lang-btn.active { background:var(--green); color:white; }
+    .laverie-bar { display:flex; align-items:center; gap:10px; padding:9px 14px; background:var(--gl); border:1.5px solid var(--gm); border-radius:var(--rs); cursor:pointer; margin-bottom:12px; }
+    .laverie-dot { width:8px; height:8px; background:var(--green); border-radius:50%; flex-shrink:0; }
+    .laverie-name-bar { font-weight:700; font-size:14px; flex:1; color:var(--green); }
+    .laverie-change { font-size:12px; color:var(--ink3); }
+    .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; }
+    .stat { background:var(--bg); border:1.5px solid var(--border); border-radius:12px; padding:9px 4px; text-align:center; }
+    .stat-emoji { font-size:14px; margin-bottom:2px; }
+    .stat-num { font-weight:900; font-size:20px; line-height:1; margin-bottom:2px; }
+    .stat-label { font-size:9px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; color:var(--ink3); }
+    .c-green{color:var(--green);} .c-orange{color:var(--orange);} .c-blue{color:var(--blue);} .c-ink{color:var(--ink);}
 
-    .header-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 14px;
-    }
-
-    .logo-main {
-      font-size: 24px;
-      font-weight: 900;
-      color: var(--ink);
-      letter-spacing: -0.5px;
-    }
-
-    .logo-main span { color: var(--green); }
-
-    .logo-sub {
-      font-size: 11px;
-      color: var(--ink3);
-      margin-top: 1px;
-    }
-
-    .header-right { display: flex; align-items: center; gap: 8px; }
-
-    .lang-toggle {
-      display: flex;
-      background: var(--bg);
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-
-    .lang-btn {
-      padding: 7px 12px;
-      border: none;
-      background: transparent;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--ink3);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .lang-btn.active { background: var(--green); color: white; }
-
-    .btn-add {
-      width: 44px; height: 44px;
-      background: var(--green);
-      border: none;
-      border-radius: 14px;
-      color: white;
-      font-size: 26px;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      transition: transform 0.15s;
-      box-shadow: 0 4px 12px rgba(30,122,62,0.3);
-      flex-shrink: 0;
-    }
-
-    .btn-add:active { transform: scale(0.92); }
-
-    /* Laverie bar */
-    .laverie-bar {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 14px;
-      background: var(--green-light);
-      border: 1.5px solid var(--green-mid);
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      margin-bottom: 12px;
-    }
-
-    .laverie-dot {
-      width: 8px; height: 8px;
-      background: var(--green);
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    .laverie-name-bar {
-      font-weight: 700;
-      font-size: 14px;
-      flex: 1;
-      color: var(--green);
-    }
-
-    .laverie-change {
-      font-size: 12px;
-      color: var(--ink3);
-    }
-
-    /* Stats */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-    }
-
-    .stat {
-      background: var(--bg);
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
-      padding: 10px 6px;
-      text-align: center;
-    }
-
-    .stat-num {
-      font-weight: 900;
-      font-size: 22px;
-      line-height: 1;
-      margin-bottom: 3px;
-    }
-
-    .stat-emoji { font-size: 14px; margin-bottom: 2px; }
-
-    .stat-label {
-      font-size: 9px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--ink3);
-    }
-
-    .c-green { color: var(--green); }
-    .c-orange { color: var(--orange); }
-    .c-blue { color: var(--blue); }
-    .c-ink { color: var(--ink); }
-
-    /* ── TABS ── */
-    .tabs-wrap {
-      background: var(--white);
-      padding: 0 16px;
-      display: flex;
-      gap: 4px;
-      border-bottom: 1.5px solid var(--border);
-      overflow-x: auto;
-      scrollbar-width: none;
-      flex-shrink: 0;
-    }
-
-    .tabs-wrap::-webkit-scrollbar { display: none; }
-
-    .tab {
-      padding: 14px 16px;
-      border: none;
-      background: transparent;
-      color: var(--ink3);
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      border-bottom: 3px solid transparent;
-      white-space: nowrap;
-      transition: all 0.2s;
-      margin-bottom: -1.5px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .tab.active {
-      color: var(--green);
-      border-bottom-color: var(--green);
-    }
-
-    .tab-count {
-      background: var(--green-light);
-      color: var(--green);
-      font-size: 11px;
-      font-weight: 700;
-      padding: 2px 7px;
-      border-radius: 20px;
-      display: none;
-    }
-
-    .tab.active .tab-count { display: inline; }
+    /* ── FILTER TABS ── */
+    .filter-wrap { background:var(--white); padding:0 16px; display:flex; gap:4px; border-bottom:1.5px solid var(--border); overflow-x:auto; scrollbar-width:none; flex-shrink:0; }
+    .filter-wrap::-webkit-scrollbar { display:none; }
+    .ftab { padding:12px 14px; border:none; background:transparent; color:var(--ink3); font-size:13px; font-weight:600; cursor:pointer; border-bottom:3px solid transparent; white-space:nowrap; transition:all 0.2s; margin-bottom:-1.5px; display:flex; align-items:center; gap:5px; }
+    .ftab.active { color:var(--green); border-bottom-color:var(--green); }
+    .ftab-count { background:var(--gl); color:var(--green); font-size:11px; font-weight:700; padding:2px 6px; border-radius:20px; display:none; }
+    .ftab.active .ftab-count { display:inline; }
 
     /* ── SEARCH ── */
-    .search-wrap {
-      padding: 12px 16px;
-      background: var(--white);
-      border-bottom: 1px solid var(--border);
-      flex-shrink: 0;
-    }
+    .search-wrap { padding:10px 16px; background:var(--white); border-bottom:1px solid var(--border); flex-shrink:0; }
+    .search-box { display:flex; align-items:center; gap:10px; background:var(--bg); border:1.5px solid var(--border); border-radius:14px; padding:10px 16px; }
+    .search-input { flex:1; border:none; background:transparent; font-size:15px; color:var(--ink); outline:none; }
+    .search-input::placeholder { color:var(--ink3); }
 
-    .search-box {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: var(--bg);
-      border: 1.5px solid var(--border);
-      border-radius: 14px;
-      padding: 10px 16px;
-    }
-
-    .search-icon { font-size: 16px; flex-shrink: 0; }
-
-    .search-input {
-      flex: 1;
-      border: none;
-      background: transparent;
-      font-size: 15px;
-      color: var(--ink);
-      outline: none;
-    }
-
-    .search-input::placeholder { color: var(--ink3); }
+    /* ── CONTENT AREA ── */
+    .content-area { flex:1; overflow:hidden; display:flex; flex-direction:column; }
 
     /* ── LIST ── */
-    .list-wrap {
-      flex: 1;
-      overflow-y: auto;
-      padding: 16px;
-      scrollbar-width: none;
+    #list-view { flex:1; overflow-y:auto; padding:14px 16px 100px; scrollbar-width:none; }
+    #list-view::-webkit-scrollbar { display:none; }
+    .empty-state { display:flex; flex-direction:column; align-items:center; justify-content:center; height:55%; gap:12px; text-align:center; padding:20px; }
+    .empty-icon { font-size:60px; }
+    .empty-title { font-size:18px; font-weight:700; color:var(--ink2); }
+    .empty-text { font-size:14px; line-height:1.7; color:var(--ink3); }
+
+    /* ── CARDS ── */
+    .client-card { background:var(--white); border:1.5px solid var(--border); border-radius:var(--r); margin-bottom:12px; animation:fadeUp 0.22s ease; box-shadow:var(--sh); overflow:hidden; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);} }
+    .card-bar { height:5px; }
+    .card-bar.en-attente{background:var(--blue);} .card-bar.en-cours{background:var(--orange);} .card-bar.pret{background:var(--green);} .card-bar.livre{background:#ccc;}
+    .card-body { padding:15px; }
+    .card-top { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+    .avatar { width:48px; height:48px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:17px; flex-shrink:0; }
+    .avatar.en-attente{background:var(--bl);color:var(--blue);} .avatar.en-cours{background:var(--ol);color:var(--orange);} .avatar.pret{background:var(--gl);color:var(--green);} .avatar.livre{background:#f0f0f0;color:#888;}
+    .client-info { flex:1; min-width:0; }
+    .client-name { font-weight:800; font-size:16px; margin-bottom:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .client-tel { font-size:12px; color:var(--ink3); }
+    .badge { padding:5px 11px; border-radius:20px; font-size:11px; font-weight:700; flex-shrink:0; }
+    .badge.en-attente{background:var(--bl);color:var(--blue);} .badge.en-cours{background:var(--ol);color:var(--orange);} .badge.pret{background:var(--gl);color:var(--green);} .badge.livre{background:#f0f0f0;color:#888;}
+    .card-note { background:var(--bg); border-radius:10px; padding:9px 12px; font-size:13px; color:var(--ink2); margin-bottom:11px; }
+    .card-prix { background:var(--gl); border-radius:10px; padding:8px 12px; font-size:13px; font-weight:700; color:var(--green); margin-bottom:11px; }
+    .card-actions { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+    .btn-a { padding:12px 8px; border-radius:var(--rs); border:none; font-size:13px; font-weight:700; cursor:pointer; transition:transform 0.12s; display:flex; align-items:center; justify-content:center; gap:5px; }
+    .btn-a:active { transform:scale(0.95); }
+    .btn-pret{background:var(--gl);color:var(--green);} .btn-cours{background:var(--ol);color:var(--orange);} .btn-attente{background:var(--bl);color:var(--blue);} .btn-livre{background:#f0f0f0;color:#666;} .btn-wa{background:#e6f9ee;color:#1a7a3c;} .btn-facture{background:#fff8e0;color:#8a6200;} .btn-del{background:var(--rl);color:var(--red);}
+    .btn-full { grid-column:1/-1; }
+
+    /* ── BOTTOM NAV ── */
+    .bottom-nav {
+      position:fixed; bottom:0; left:50%; transform:translateX(-50%);
+      width:100%; max-width:430px;
+      background:var(--white);
+      border-top:1.5px solid var(--border);
+      display:flex; align-items:center; justify-content:space-around;
+      height:var(--nav);
+      padding-bottom:env(safe-area-inset-bottom);
+      box-shadow:0 -4px 20px rgba(30,122,62,0.1);
+      z-index:50;
+    }
+    .nav-btn {
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      gap:3px; flex:1; height:100%; border:none; background:transparent;
+      cursor:pointer; transition:all 0.2s; color:var(--ink3); font-size:11px; font-weight:600;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .nav-btn.active { color:var(--green); }
+    .nav-btn-icon { font-size:22px; transition:transform 0.2s; }
+    .nav-btn.active .nav-btn-icon { transform:scale(1.15); }
+
+    /* Bouton + central */
+    .nav-add {
+      width:58px; height:58px; border-radius:20px;
+      background:var(--green); border:none; color:white;
+      font-size:30px; display:flex; align-items:center; justify-content:center;
+      cursor:pointer; margin-top:-20px;
+      box-shadow:0 6px 20px rgba(30,122,62,0.4);
+      transition:transform 0.15s, box-shadow 0.15s;
+      -webkit-tap-highlight-color:transparent;
+      flex-shrink:0;
+    }
+    .nav-add:active { transform:scale(0.92); box-shadow:0 3px 10px rgba(30,122,62,0.3); }
+    .nav-add.rotated { transform:rotate(45deg); }
+
+    /* ── CAISSE VIEW ── */
+    #caisse-view { display:none; flex:1; overflow-y:auto; padding:14px 16px 100px; scrollbar-width:none; }
+    #caisse-view::-webkit-scrollbar { display:none; }
+    #caisse-view.visible { display:block; }
+    .caisse-hero { background:var(--green); border-radius:20px; padding:22px 20px; color:white; margin-bottom:14px; position:relative; overflow:hidden; }
+    .caisse-hero::after { content:'💰'; position:absolute; right:16px; top:50%; transform:translateY(-50%); font-size:52px; opacity:0.15; }
+    .caisse-hero-label { font-size:13px; opacity:0.85; margin-bottom:4px; }
+    .caisse-hero-amount { font-size:34px; font-weight:900; line-height:1; }
+    .caisse-hero-sub { font-size:12px; opacity:0.75; margin-top:5px; }
+    .caisse-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:18px; }
+    .caisse-card { background:var(--white); border:1.5px solid var(--border); border-radius:16px; padding:15px; box-shadow:var(--sh); }
+    .caisse-card-emoji { font-size:20px; margin-bottom:5px; }
+    .caisse-card-val { font-size:19px; font-weight:900; color:var(--green); }
+    .caisse-card-label { font-size:11px; color:var(--ink3); font-weight:600; margin-top:2px; }
+    .section-title { font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:0.5px; color:var(--ink3); margin-bottom:10px; display:flex; align-items:center; gap:6px; }
+    .jour-row { background:var(--white); border:1.5px solid var(--border); border-radius:14px; padding:13px 15px; margin-bottom:8px; display:flex; align-items:center; gap:13px; box-shadow:var(--sh); }
+    .jour-dot { width:42px; height:42px; background:var(--gl); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+    .jour-info { flex:1; }
+    .jour-date { font-weight:700; font-size:14px; }
+    .jour-nb { font-size:12px; color:var(--ink3); margin-top:1px; }
+    .jour-montant { font-weight:900; font-size:16px; color:var(--green); text-align:right; }
+    .jour-devise { font-size:10px; color:var(--ink3); text-align:right; }
+    .caisse-empty { text-align:center; padding:40px 20px; }
+    .caisse-empty-icon { font-size:48px; margin-bottom:12px; opacity:0.35; }
+    .caisse-empty-txt { font-size:14px; color:var(--ink3); line-height:1.7; }
+
+    /* ── BOTTOM SHEET (draggable) ── */
+    .sheet-overlay {
+      position:fixed; inset:0; background:rgba(10,30,15,0.45);
+      backdrop-filter:blur(5px); z-index:90;
+      opacity:0; pointer-events:none; transition:opacity 0.25s;
+    }
+    .sheet-overlay.open { opacity:1; pointer-events:all; }
+
+    .bottom-sheet {
+      position:fixed; bottom:0; left:50%; transform:translateX(-50%) translateY(100%);
+      width:100%; max-width:430px;
+      background:var(--white);
+      border-radius:26px 26px 0 0;
+      padding:0 22px 50px;
+      z-index:95;
+      box-shadow:var(--shl);
+      transition:transform 0.35s cubic-bezier(0.34,1.2,0.64,1);
+      touch-action:none;
+      max-height:92dvh;
+      overflow-y:auto;
     }
 
-    .list-wrap::-webkit-scrollbar { display: none; }
+    .bottom-sheet.open { transform:translateX(-50%) translateY(0); }
 
-    /* Empty */
-    .empty-state {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 60%;
-      gap: 14px;
-      text-align: center;
-      padding: 20px;
+    .sheet-handle-wrap {
+      display:flex; justify-content:center;
+      padding:14px 0 6px;
+      cursor:grab;
+      user-select:none;
     }
+    .sheet-handle { width:40px; height:4px; background:var(--border); border-radius:2px; }
 
-    .empty-icon { font-size: 64px; }
-    .empty-title { font-size: 18px; font-weight: 700; color: var(--ink2); }
-    .empty-text { font-size: 14px; line-height: 1.7; color: var(--ink3); }
+    .sheet-title { font-size:22px; font-weight:800; margin-bottom:4px; margin-top:6px; }
+    .sheet-subtitle { font-size:14px; color:var(--ink3); margin-bottom:22px; }
 
-    .empty-btn {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--green);
-      color: white;
-      border: none;
-      border-radius: var(--radius-sm);
-      padding: 14px 24px;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(30,122,62,0.3);
-      margin-top: 4px;
-    }
+    .field { margin-bottom:15px; }
+    .field label { display:flex; align-items:center; gap:6px; font-size:13px; font-weight:700; color:var(--ink2); margin-bottom:7px; }
+    .field input { width:100%; background:var(--bg); border:2px solid var(--border); border-radius:var(--rs); padding:13px 15px; color:var(--ink); font-size:16px; outline:none; transition:border-color 0.2s; }
+    .field input:focus { border-color:var(--green); }
+    .field input::placeholder { color:var(--ink3); }
+    .sheet-actions { display:flex; gap:10px; margin-top:22px; }
+    .btn-cancel { flex:1; padding:15px; background:var(--bg); border:2px solid var(--border); border-radius:var(--rs); color:var(--ink3); font-size:16px; font-weight:700; cursor:pointer; }
+    .btn-confirm { flex:2; padding:15px; background:var(--green); border:none; border-radius:var(--rs); color:white; font-size:16px; font-weight:800; cursor:pointer; box-shadow:0 4px 12px rgba(30,122,62,0.3); transition:transform 0.12s; }
+    .btn-confirm:active { transform:scale(0.97); }
 
-    /* ── CLIENT CARD ── */
-    .client-card {
-      background: var(--white);
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius);
-      margin-bottom: 12px;
-      animation: fadeUp 0.25s ease;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-
-    .card-color-bar { height: 5px; width: 100%; }
-    .card-color-bar.en-attente { background: var(--blue); }
-    .card-color-bar.en-cours { background: var(--orange); }
-    .card-color-bar.pret { background: var(--green); }
-    .card-color-bar.livre { background: #ccc; }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .card-body { padding: 16px; }
-
-    .card-top {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 14px;
-    }
-
-    .avatar {
-      width: 50px; height: 50px;
-      border-radius: 16px;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 900;
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-
-    .avatar.en-attente { background: var(--blue-light); color: var(--blue); }
-    .avatar.en-cours { background: var(--orange-light); color: var(--orange); }
-    .avatar.pret { background: var(--green-light); color: var(--green); }
-    .avatar.livre { background: #f0f0f0; color: #888; }
-
-    .client-info { flex: 1; min-width: 0; }
-
-    .client-name {
-      font-weight: 800;
-      font-size: 17px;
-      margin-bottom: 3px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .client-tel {
-      font-size: 13px;
-      color: var(--ink3);
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .badge {
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-
-    .badge.en-attente { background: var(--blue-light); color: var(--blue); }
-    .badge.en-cours { background: var(--orange-light); color: var(--orange); }
-    .badge.pret { background: var(--green-light); color: var(--green); }
-    .badge.livre { background: #f0f0f0; color: #888; }
-
-    .card-note {
-      background: var(--bg);
-      border-radius: 10px;
-      padding: 10px 12px;
-      font-size: 13px;
-      color: var(--ink2);
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .card-prix {
-      background: var(--green-light);
-      border-radius: 10px;
-      padding: 8px 12px;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--green);
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    /* Action buttons — grands et lisibles */
-    .card-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-
-    .card-actions.one-col { grid-template-columns: 1fr; }
-    .card-actions.three-col { grid-template-columns: 1fr 1fr 1fr; }
-
-    .btn-action {
-      padding: 13px 10px;
-      border-radius: var(--radius-sm);
-      border: none;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform 0.15s, opacity 0.15s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      line-height: 1.2;
-    }
-
-    .btn-action:active { transform: scale(0.96); opacity: 0.85; }
-
-    .btn-pret { background: var(--green-light); color: var(--green); }
-    .btn-cours { background: var(--orange-light); color: var(--orange); }
-    .btn-attente { background: var(--blue-light); color: var(--blue); }
-    .btn-livre { background: #f0f0f0; color: #666; }
-    .btn-wa { background: #e6f9ee; color: #1a7a3c; }
-    .btn-facture { background: #fff8e0; color: #8a6200; }
-    .btn-del { background: var(--red-light); color: var(--red); }
-
-    .card-divider {
-      height: 1px;
-      background: var(--border);
-      margin: 0 16px 14px;
-    }
-
-    /* ── OVERLAY / MODAL ── */
-    .overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(10,30,15,0.5);
-      backdrop-filter: blur(6px);
-      z-index: 100;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s;
-    }
-
-    .overlay.open { opacity: 1; pointer-events: all; }
-
-    .modal {
-      background: var(--white);
-      border-radius: 28px 28px 0 0;
-      padding: 24px 24px 50px;
-      width: 100%;
-      max-width: 430px;
-      transform: translateY(40px);
-      transition: transform 0.35s cubic-bezier(0.34,1.4,0.64,1);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .overlay.open .modal { transform: translateY(0); }
-
-    .modal-handle {
-      width: 36px; height: 4px;
-      background: var(--border);
-      border-radius: 2px;
-      margin: 0 auto 24px;
-    }
-
-    .modal-title {
-      font-size: 22px;
-      font-weight: 800;
-      margin-bottom: 6px;
-      color: var(--ink);
-    }
-
-    .modal-subtitle {
-      font-size: 14px;
-      color: var(--ink3);
-      margin-bottom: 24px;
-    }
-
-    .field { margin-bottom: 16px; }
-
-    .field label {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--ink2);
-      margin-bottom: 8px;
-    }
-
-    .field input {
-      width: 100%;
-      background: var(--bg);
-      border: 2px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 14px 16px;
-      color: var(--ink);
-      font-size: 16px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .field input:focus { border-color: var(--green); }
-    .field input::placeholder { color: var(--ink3); }
-
-    .modal-actions { display: flex; gap: 10px; margin-top: 24px; }
-
-    .btn-cancel {
-      flex: 1;
-      padding: 16px;
-      background: var(--bg);
-      border: 2px solid var(--border);
-      border-radius: var(--radius-sm);
-      color: var(--ink3);
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .btn-confirm {
-      flex: 2;
-      padding: 16px;
-      background: var(--green);
-      border: none;
-      border-radius: var(--radius-sm);
-      color: white;
-      font-size: 16px;
-      font-weight: 800;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(30,122,62,0.3);
-      transition: transform 0.15s;
-    }
-
-    .btn-confirm:active { transform: scale(0.97); }
+    /* Sheet paramètres */
+    .params-sheet { max-height:75dvh; }
 
     /* ── FACTURE MODAL ── */
-    .facture-modal {
-      background: var(--white);
-      border-radius: 28px 28px 0 0;
-      padding: 24px 20px 50px;
-      width: 100%;
-      max-width: 430px;
-      transform: translateY(40px);
-      transition: transform 0.35s cubic-bezier(0.34,1.4,0.64,1);
-      box-shadow: var(--shadow-lg);
-      max-height: 88dvh;
-      overflow-y: auto;
+    .facture-overlay {
+      position:fixed; inset:0; background:rgba(10,30,15,0.5);
+      backdrop-filter:blur(5px); z-index:200;
+      opacity:0; pointer-events:none; transition:opacity 0.25s;
+      display:flex; align-items:flex-end; justify-content:center;
     }
-
-    .overlay.open .facture-modal { transform: translateY(0); }
-
-    .facture-doc {
-      background: var(--bg);
-      border: 1.5px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
-      margin: 16px 0;
-      font-size: 14px;
+    .facture-overlay.open { opacity:1; pointer-events:all; }
+    .facture-sheet {
+      background:var(--white); border-radius:26px 26px 0 0;
+      padding:20px 20px 50px; width:100%; max-width:430px;
+      transform:translateY(40px); transition:transform 0.3s cubic-bezier(0.34,1.4,0.64,1);
+      max-height:88dvh; overflow-y:auto; box-shadow:var(--shl);
     }
-
-    .facture-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      padding-bottom: 14px;
-      border-bottom: 2px solid var(--green);
-      margin-bottom: 16px;
-    }
-
-    .facture-brand { font-size: 20px; font-weight: 900; }
-    .facture-brand span { color: var(--green); }
-    .facture-brand-sub { font-size: 11px; color: var(--ink3); margin-top: 2px; }
-    .facture-num-label { font-size: 10px; color: var(--ink3); text-align: right; text-transform: uppercase; }
-    .facture-num-val { font-weight: 800; font-size: 13px; color: var(--ink); text-align: right; }
-    .facture-date { font-size: 11px; color: var(--ink3); text-align: right; margin-top: 2px; }
-
-    .facture-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 14px;
-    }
-
-    .facture-row:last-of-type { border-bottom: none; }
-    .facture-row-label { color: var(--ink3); }
-    .facture-row-val { font-weight: 700; color: var(--ink); }
-
-    .facture-total-box {
-      background: var(--green-light);
-      border-radius: 12px;
-      padding: 14px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 12px;
-    }
-
-    .facture-total-label { font-weight: 700; font-size: 15px; color: var(--green); }
-    .facture-total-val { font-weight: 900; font-size: 22px; color: var(--green); }
-
-    .facture-code-box {
-      background: var(--white);
-      border: 2px dashed var(--green-mid);
-      border-radius: 12px;
-      padding: 12px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 12px;
-    }
-
-    .facture-code-label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--ink3); }
-    .facture-code-val { font-family: monospace; font-weight: 900; font-size: 15px; color: var(--ink); letter-spacing: 1px; }
-    .facture-footer { font-size: 12px; color: var(--ink3); text-align: center; margin-top: 14px; }
-
-    .btn-send-wa {
-      width: 100%;
-      padding: 16px;
-      background: #25a244;
-      border: none;
-      border-radius: var(--radius-sm);
-      color: white;
-      font-size: 16px;
-      font-weight: 800;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 10px;
-      box-shadow: 0 4px 12px rgba(37,162,68,0.3);
-    }
+    .facture-overlay.open .facture-sheet { transform:translateY(0); }
+    .facture-doc { background:var(--bg); border:1.5px solid var(--border); border-radius:14px; padding:18px; margin:14px 0; font-size:14px; }
+    .fact-header { display:flex; justify-content:space-between; padding-bottom:12px; border-bottom:2px solid var(--green); margin-bottom:14px; }
+    .fact-brand { font-size:18px; font-weight:900; }
+    .fact-brand span { color:var(--green); }
+    .fact-brand-sub { font-size:10px; color:var(--ink3); margin-top:2px; }
+    .fact-num-label { font-size:10px; color:var(--ink3); text-align:right; text-transform:uppercase; }
+    .fact-num-val { font-weight:800; font-size:12px; text-align:right; }
+    .fact-date { font-size:10px; color:var(--ink3); text-align:right; margin-top:1px; }
+    .fact-row { display:flex; justify-content:space-between; padding:7px 0; border-bottom:1px solid var(--border); font-size:13px; }
+    .fact-row:last-of-type { border:none; }
+    .fact-row-label { color:var(--ink3); }
+    .fact-row-val { font-weight:700; }
+    .fact-total { background:var(--gl); border-radius:10px; padding:12px 14px; display:flex; justify-content:space-between; align-items:center; margin-top:10px; }
+    .fact-total-label { font-weight:700; font-size:14px; color:var(--green); }
+    .fact-total-val { font-weight:900; font-size:20px; color:var(--green); }
+    .fact-code { background:var(--white); border:2px dashed var(--gm); border-radius:10px; padding:10px 14px; display:flex; justify-content:space-between; align-items:center; margin-top:10px; }
+    .fact-code-label { font-size:10px; font-weight:700; text-transform:uppercase; color:var(--ink3); }
+    .fact-code-val { font-family:monospace; font-weight:900; font-size:14px; letter-spacing:1px; }
+    .fact-footer { font-size:11px; color:var(--ink3); text-align:center; margin-top:12px; }
+    .btn-wa-send { width:100%; padding:15px; background:#25a244; border:none; border-radius:var(--rs); color:white; font-size:15px; font-weight:800; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:8px; box-shadow:0 4px 12px rgba(37,162,68,0.3); }
+    .btn-close-facture { width:100%; padding:13px; background:var(--bg); border:2px solid var(--border); border-radius:var(--rs); color:var(--ink3); font-size:15px; font-weight:700; cursor:pointer; }
 
     /* ── TOAST ── */
-    .toast {
-      position: fixed;
-      bottom: 32px;
-      left: 50%;
-      transform: translateX(-50%) translateY(80px);
-      background: var(--ink);
-      color: white;
-      border-radius: 30px;
-      padding: 13px 22px;
-      font-size: 14px;
-      font-weight: 600;
-      white-space: nowrap;
-      z-index: 200;
-      transition: transform 0.3s cubic-bezier(0.34,1.4,0.64,1);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: var(--shadow-lg);
-    }
+    .toast { position:fixed; bottom:90px; left:50%; transform:translateX(-50%) translateY(70px); background:var(--ink); color:white; border-radius:30px; padding:12px 20px; font-size:14px; font-weight:600; white-space:nowrap; z-index:300; transition:transform 0.3s cubic-bezier(0.34,1.4,0.64,1); display:flex; align-items:center; gap:8px; box-shadow:var(--shl); }
+    .toast.show { transform:translateX(-50%) translateY(0); }
 
-    .toast.show { transform: translateX(-50%) translateY(0); }
+    /* ── PAGE EXPIRATION ── */
+    #expire-screen {
+      display:none;
+      position:fixed;
+      inset:0;
+      background:#fff;
+      z-index:9999;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      padding:32px 28px;
+      text-align:center;
+      max-width:430px;
+      margin:0 auto;
+    }
+    #expire-screen.show { display:flex; }
+    .expire-icon { font-size:72px; margin-bottom:20px; animation:pulse-icon 2s infinite; }
+    @keyframes pulse-icon { 0%,100%{transform:scale(1);} 50%{transform:scale(1.08);} }
+    .expire-logo { font-size:26px; font-weight:900; margin-bottom:6px; }
+    .expire-logo span { color:var(--green); }
+    .expire-title { font-size:22px; font-weight:800; color:var(--ink); margin-bottom:10px; line-height:1.3; }
+    .expire-text { font-size:15px; color:var(--ink3); line-height:1.7; margin-bottom:8px; }
+    .expire-days { font-size:13px; color:var(--ink3); margin-bottom:32px; }
+    .expire-days strong { color:var(--red); }
+    .btn-reabonner {
+      width:100%;
+      padding:18px;
+      background:var(--green);
+      border:none;
+      border-radius:18px;
+      color:white;
+      font-size:18px;
+      font-weight:800;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      box-shadow:0 6px 20px rgba(30,122,62,0.35);
+      animation:pulse-btn 2s infinite;
+    }
+    @keyframes pulse-btn { 0%,100%{box-shadow:0 6px 20px rgba(30,122,62,0.35);} 50%{box-shadow:0 6px 30px rgba(30,122,62,0.55);} }
+    .btn-reabonner:active { transform:scale(0.97); }
+    .expire-footer { font-size:12px; color:var(--ink3); margin-top:20px; line-height:1.6; }
   </style>
 </head>
 <body>
@@ -697,260 +304,234 @@
         <div class="logo-main">Sec<span>Express</span></div>
         <div class="logo-sub" id="lbl-slogan"></div>
       </div>
-      <div class="header-right">
-        <div class="lang-toggle">
-          <button class="lang-btn" onclick="setLang('fr')">FR</button>
-          <button class="lang-btn" onclick="setLang('rw')">RW</button>
-        </div>
-        <button class="btn-add" onclick="openModal()" id="btn-add-main">+</button>
+      <div class="lang-toggle">
+        <button class="lang-btn" onclick="setLang('fr')">FR</button>
+        <button class="lang-btn" onclick="setLang('rw')">RW</button>
       </div>
     </div>
-
-    <div class="laverie-bar" onclick="changeLaverie()">
+    <div class="laverie-bar" onclick="openParams()">
       <div class="laverie-dot"></div>
       <div class="laverie-name-bar" id="laverie-name">Ma Laverie</div>
-      <div class="laverie-change" id="lbl-modifier">⚙️</div>
+      <div class="laverie-change">⚙️ <span id="lbl-modifier"></span></div>
     </div>
-
     <div class="stats">
-      <div class="stat">
-        <div class="stat-emoji">👔</div>
-        <div class="stat-num c-ink" id="stat-total">0</div>
-        <div class="stat-label" id="lbl-total">Total</div>
-      </div>
-      <div class="stat">
-        <div class="stat-emoji">⏳</div>
-        <div class="stat-num c-blue" id="stat-attente">0</div>
-        <div class="stat-label" id="lbl-attente">Attente</div>
-      </div>
-      <div class="stat">
-        <div class="stat-emoji">🔄</div>
-        <div class="stat-num c-orange" id="stat-cours">0</div>
-        <div class="stat-label" id="lbl-cours">En cours</div>
-      </div>
-      <div class="stat">
-        <div class="stat-emoji">✅</div>
-        <div class="stat-num c-green" id="stat-pret">0</div>
-        <div class="stat-label" id="lbl-pret">Prets</div>
-      </div>
+      <div class="stat"><div class="stat-emoji">👔</div><div class="stat-num c-ink" id="stat-total">0</div><div class="stat-label" id="lbl-total"></div></div>
+      <div class="stat"><div class="stat-emoji">⏳</div><div class="stat-num c-blue" id="stat-attente">0</div><div class="stat-label" id="lbl-attente"></div></div>
+      <div class="stat"><div class="stat-emoji">🔄</div><div class="stat-num c-orange" id="stat-cours">0</div><div class="stat-label" id="lbl-cours"></div></div>
+      <div class="stat"><div class="stat-emoji">✅</div><div class="stat-num c-green" id="stat-pret">0</div><div class="stat-label" id="lbl-pret"></div></div>
     </div>
   </header>
 
-  <!-- TABS -->
-  <div class="tabs-wrap">
-    <button class="tab active" onclick="setFilter('tous',this)" id="tab-tous">
-      <span>👔</span><span id="tab-tous-txt"></span><span class="tab-count" id="count-tous">0</span>
-    </button>
-    <button class="tab" onclick="setFilter('en-attente',this)" id="tab-attente">
-      <span>⏳</span><span id="tab-attente-txt"></span><span class="tab-count" id="count-attente">0</span>
-    </button>
-    <button class="tab" onclick="setFilter('en-cours',this)" id="tab-encours">
-      <span>🔄</span><span id="tab-encours-txt"></span><span class="tab-count" id="count-encours">0</span>
-    </button>
-    <button class="tab" onclick="setFilter('pret',this)" id="tab-pret">
-      <span>✅</span><span id="tab-pret-txt"></span><span class="tab-count" id="count-pret">0</span>
-    </button>
-    <button class="tab" onclick="setFilter('livre',this)" id="tab-livre">
-      <span>📦</span><span id="tab-livre-txt"></span><span class="tab-count" id="count-livre">0</span>
-    </button>
+  <!-- FILTER TABS (clients seulement) -->
+  <div class="filter-wrap" id="filter-wrap">
+    <button class="ftab active" onclick="setFilter('tous',this)"><span>👔</span><span id="ft-tous"></span><span class="ftab-count" id="cnt-tous">0</span></button>
+    <button class="ftab" onclick="setFilter('en-attente',this)"><span>⏳</span><span id="ft-attente"></span><span class="ftab-count" id="cnt-attente">0</span></button>
+    <button class="ftab" onclick="setFilter('en-cours',this)"><span>🔄</span><span id="ft-cours"></span><span class="ftab-count" id="cnt-cours">0</span></button>
+    <button class="ftab" onclick="setFilter('pret',this)"><span>✅</span><span id="ft-pret"></span><span class="ftab-count" id="cnt-pret">0</span></button>
   </div>
 
   <!-- SEARCH -->
-  <div class="search-wrap">
+  <div class="search-wrap" id="search-wrap">
     <div class="search-box">
-      <span class="search-icon">🔍</span>
+      <span>🔍</span>
       <input class="search-input" id="search" type="text" oninput="render()"/>
     </div>
   </div>
 
-  <!-- LIST -->
-  <div class="list-wrap">
-    <div class="empty-state" id="empty-state">
-      <div class="empty-icon">🧺</div>
-      <div class="empty-title" id="lbl-empty-title">Aucun client</div>
-      <div class="empty-text" id="lbl-empty">Appuie sur le bouton vert pour ajouter votre premier client.</div>
-      <button class="empty-btn" onclick="openModal()">
-        <span>+</span> <span id="lbl-empty-btn">Ajouter un client</span>
-      </button>
+  <!-- CONTENT -->
+  <div class="content-area">
+    <!-- Liste clients -->
+    <div id="list-view">
+      <div class="empty-state" id="empty-state">
+        <div class="empty-icon">🧺</div>
+        <div class="empty-title" id="lbl-empty-title"></div>
+        <div class="empty-text" id="lbl-empty"></div>
+      </div>
+      <div id="client-list"></div>
     </div>
-    <div id="client-list"></div>
+
+    <!-- Caisse -->
+    <div id="caisse-view">
+      <div class="caisse-hero">
+        <div class="caisse-hero-label" id="lbl-ch-today"></div>
+        <div class="caisse-hero-amount" id="ch-today-amt">0</div>
+        <div class="caisse-hero-sub" id="ch-today-sub"></div>
+      </div>
+      <div class="caisse-grid">
+        <div class="caisse-card"><div class="caisse-card-emoji">📅</div><div class="caisse-card-val" id="ch-week">0</div><div class="caisse-card-label" id="lbl-ch-week"></div></div>
+        <div class="caisse-card"><div class="caisse-card-emoji">📆</div><div class="caisse-card-val" id="ch-month">0</div><div class="caisse-card-label" id="lbl-ch-month"></div></div>
+        <div class="caisse-card"><div class="caisse-card-emoji">👥</div><div class="caisse-card-val" id="ch-clients">0</div><div class="caisse-card-label" id="lbl-ch-clients"></div></div>
+        <div class="caisse-card"><div class="caisse-card-emoji">💵</div><div class="caisse-card-val" id="ch-moyenne">0</div><div class="caisse-card-label" id="lbl-ch-moyenne"></div></div>
+      </div>
+      <div class="section-title">📋 <span id="lbl-ch-histo"></span></div>
+      <div id="caisse-jours"></div>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active" id="nav-clients" onclick="showClients()">
+      <span class="nav-btn-icon">👔</span>
+      <span id="nav-lbl-clients"></span>
+    </button>
+    <button class="nav-add" id="nav-add" onclick="toggleSheet()">+</button>
+    <button class="nav-btn" id="nav-caisse" onclick="showCaisse()">
+      <span class="nav-btn-icon">💰</span>
+      <span id="nav-lbl-caisse"></span>
+    </button>
+  </nav>
+</div>
+
+<!-- SHEET OVERLAY -->
+<div class="sheet-overlay" id="sheet-overlay" onclick="closeSheet()"></div>
+
+<!-- BOTTOM SHEET — Ajout client (draggable) -->
+<div class="bottom-sheet" id="add-sheet">
+  <div class="sheet-handle-wrap" id="sheet-drag-handle">
+    <div class="sheet-handle"></div>
+  </div>
+  <div class="sheet-title" id="lbl-sheet-title">Nouveau client</div>
+  <div class="sheet-subtitle" id="lbl-sheet-sub">Remplissez les informations</div>
+  <div class="field"><label>🏷️ <span id="lbl-ticket-num"></span></label>
+    <div style="background:var(--gl);border:2px solid var(--gm);border-radius:var(--rs);padding:13px 15px;font-size:18px;font-weight:900;color:var(--green);text-align:center;" id="ticket-preview">N° —</div>
+  </div>
+  <div class="field"><label>👤 <span id="lbl-nom"></span></label><input id="input-nom" type="text"/></div>
+  <div class="field"><label>📱 <span id="lbl-tel"></span></label><input id="input-numero" type="tel" placeholder="243812345678"/></div>
+  <div class="field"><label>👕 <span id="lbl-articles"></span></label><input id="input-note" type="text"/></div>
+  <div class="field"><label>🔢 <span id="lbl-etiquette"></span></label><input id="input-etiquette" type="text" placeholder="ex: A12, 007, R3"/></div>
+  <div class="field"><label>💰 <span id="lbl-prix"></span></label><input id="input-prix" type="number" min="0" placeholder="0" oninput="updateReste()"/></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+    <div class="field" style="margin:0"><label>✅ <span id="lbl-paye"></span></label><input id="input-paye" type="number" min="0" placeholder="0" oninput="updateReste()"/></div>
+    <div class="field" style="margin:0"><label>⏳ <span id="lbl-reste-lbl"></span></label>
+      <div style="background:var(--rl);border:2px solid #f5c5c5;border-radius:var(--rs);padding:13px 15px;font-size:16px;font-weight:800;color:var(--red);" id="reste-display">0</div>
+    </div>
+  </div>
+  <div class="sheet-actions">
+    <button class="btn-cancel" onclick="closeSheet()" id="lbl-annuler"></button>
+    <button class="btn-confirm" onclick="addClient()" id="lbl-ajouter"></button>
   </div>
 </div>
 
-<!-- Modal ajout client -->
-<div class="overlay" id="overlay" onclick="closeModalOutside(event)">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-title" id="lbl-modal-title">Nouveau client</div>
-    <div class="modal-subtitle" id="lbl-modal-sub">Remplissez les informations du client</div>
-
-    <div class="field">
-      <label><span>👤</span> <span id="lbl-nom">Nom complet</span></label>
-      <input id="input-nom" type="text"/>
-    </div>
-    <div class="field">
-      <label><span>📱</span> <span id="lbl-tel">Numero WhatsApp</span></label>
-      <input id="input-numero" type="tel" placeholder="243812345678"/>
-    </div>
-    <div class="field">
-      <label><span>👕</span> <span id="lbl-articles">Articles</span></label>
-      <input id="input-note" type="text"/>
-    </div>
-    <div class="field">
-      <label><span>💰</span> <span id="lbl-prix-label">Prix total</span></label>
-      <input id="input-prix" type="number" min="0" placeholder="0"/>
-    </div>
-
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeModal()" id="lbl-annuler">Annuler</button>
-      <button class="btn-confirm" onclick="addClient()" id="lbl-ajouter">✅ Ajouter</button>
-    </div>
+<!-- SHEET — Paramètres -->
+<div class="bottom-sheet params-sheet" id="params-sheet">
+  <div class="sheet-handle-wrap" id="params-drag-handle">
+    <div class="sheet-handle"></div>
+  </div>
+  <div class="sheet-title" id="lbl-params-title">Paramètres</div>
+  <div class="sheet-subtitle" id="lbl-params-sub">Personnalisez votre laverie</div>
+  <div class="field"><label>🏪 <span id="lbl-lav-nom"></span></label><input id="input-lav" type="text"/></div>
+  <div class="field"><label>💵 <span id="lbl-devise"></span></label><input id="input-devise" type="text" placeholder="CDF"/></div>
+  <div class="sheet-actions">
+    <button class="btn-cancel" onclick="closeParams()" id="lbl-params-annuler"></button>
+    <button class="btn-confirm" onclick="saveParams()" id="lbl-params-save"></button>
   </div>
 </div>
+<div class="sheet-overlay" id="params-overlay" onclick="closeParams()"></div>
 
-<!-- Modal parametres laverie -->
-<div class="overlay" id="overlay-lav" onclick="closeLavOutside(event)">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-title" id="lbl-lav-title">Parametres</div>
-    <div class="modal-subtitle" id="lbl-lav-sub">Personnalisez votre laverie</div>
-
-    <div class="field">
-      <label><span>🏪</span> <span id="lbl-lav-label">Nom de la laverie</span></label>
-      <input id="input-lav" type="text"/>
-    </div>
-    <div class="field">
-      <label><span>💵</span> <span id="lbl-devise-label">Devise</span></label>
-      <input id="input-devise" type="text" placeholder="CDF"/>
-    </div>
-
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeLav()" id="lbl-lav-annuler">Annuler</button>
-      <button class="btn-confirm" onclick="saveLaverie()" id="lbl-lav-save">💾 Sauvegarder</button>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Facture -->
-<div class="overlay" id="overlay-facture" onclick="closeFactureOutside(event)">
-  <div class="facture-modal">
-    <div class="modal-handle"></div>
-    <div class="modal-title" id="lbl-facture-title">Facture</div>
-    <div class="modal-subtitle" id="lbl-facture-sub">Envoyez la facture au client</div>
+<!-- FACTURE -->
+<div class="facture-overlay" id="facture-overlay" onclick="closeFactureOutside(event)">
+  <div class="facture-sheet">
+    <div class="sheet-handle-wrap"><div class="sheet-handle"></div></div>
+    <div class="sheet-title" id="lbl-fact-title">Facture</div>
+    <div class="sheet-subtitle" id="lbl-fact-sub"></div>
     <div class="facture-doc" id="facture-doc"></div>
-    <button class="btn-send-wa" onclick="sendFactureWA()">
+    <button class="btn-wa-send" onclick="sendFactureWA()">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      <span id="lbl-send-facture">Envoyer via WhatsApp</span>
+      <span id="lbl-send-fact"></span>
     </button>
-    <button class="btn-cancel" style="width:100%;padding:14px;border-radius:14px;" onclick="closeFacture()">
-      <span id="lbl-fermer-facture">Fermer</span>
-    </button>
+    <button class="btn-close-facture" onclick="closeFacture()"><span id="lbl-close-fact"></span></button>
   </div>
 </div>
 
-<div class="toast" id="toast"><span id="toast-icon"></span> <span id="toast-msg"></span></div>
+<!-- PAGE EXPIRATION -->
+<div id="expire-screen">
+  <div class="expire-icon">🔒</div>
+  <div class="expire-logo">Sec<span>Express</span></div>
+  <div class="expire-title" id="exp-title">Abonnement expiré</div>
+  <div class="expire-text" id="exp-text">Votre période d'essai est terminée.<br>Réabonnez-vous pour continuer à utiliser SecExpress.</div>
+  <div class="expire-days" id="exp-days"></div>
+  <button class="btn-reabonner" onclick="reabonner()">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    <span id="exp-btn">Se réabonner</span>
+  </button>
+  <div class="expire-footer" id="exp-footer">En appuyant sur le bouton, vous serez redirigé<br>vers WhatsApp pour contacter SecExpress.</div>
+</div>
+
+<div class="toast" id="toast"><span id="ti"></span> <span id="tm"></span></div>
 
 <script>
-// ── TRADUCTIONS ──
+// ══ TRADUCTIONS ══
 const T = {
   fr: {
-    slogan: 'Gestion de laverie',
-    modifier: '⚙️ Parametres',
-    total:'Total', attente:'Attente', cours:'En cours', pret:'Prets',
-    tabTous:'Tous', tabAttente:'Attente', tabCours:'En cours', tabPret:'Prets', tabLivre:'Livres',
-    search: 'Chercher un client...',
-    emptyTitle: 'Aucun client pour l\'instant',
-    empty: 'Appuie sur le bouton vert pour ajouter votre premier client.',
-    emptyBtn: 'Ajouter un client',
-    modalTitle: 'Nouveau client',
-    modalSub: 'Remplissez les informations du client',
-    nom: 'Nom complet', tel: 'Numero WhatsApp',
-    articles: 'Articles (chemises, pantalons...)',
-    prixLabel: 'Prix total a payer',
-    annuler: 'Annuler', ajouter: 'Ajouter',
-    lavTitle: 'Parametres laverie', lavSub: 'Personnalisez votre laverie',
-    lavLabel: 'Nom de la laverie', deviseLabel: 'Devise (CDF, USD...)',
-    lavSave: 'Sauvegarder',
-    factureTitle: 'Facture prete',
-    factureSub: 'Envoyez la facture au client via WhatsApp',
-    sendFacture: 'Envoyer la facture via WhatsApp',
-    fermerFacture: 'Fermer',
-    status: { 'en-attente':'En attente','en-cours':'En cours','pret':'Pret','livre':'Livre' },
-    btnCours: 'Lancer le lavage',
-    btnPret: 'Marquer pret',
-    btnAttente: 'Remettre en attente',
-    btnLivre: 'Marque comme livre',
-    btnRetour: 'Retour en cours',
-    btnWA: 'Envoyer message',
-    btnFacture: 'Voir facture',
-    btnSuppr: 'Supprimer',
-    toastAjout: 'ajoute avec succes',
-    toastStatut: 'Statut mis a jour',
-    toastNom: 'Parametres sauvegardes',
-    toastWA: 'WhatsApp ouvert',
-    toastSuppr: 'Client supprime',
-    erreur: 'Veuillez saisir le nom et le numero',
-    factDocTitle: 'FACTURE',
-    factClient: 'Client',
-    factArticles: 'Articles',
-    factPrix: 'Prix',
-    factTotal: 'TOTAL A PAYER',
-    factCode: 'Code de retrait',
-    factMerci: 'Merci de faire confiance a SecExpress !',
-    wa: {
+    slogan:'Gestion de laverie', modifier:'Parametres',
+    total:'Total', attente:'Attente', cours:'Cours', pret:'Prets',
+    ftTous:'Tous', ftAttente:'Attente', ftCours:'En cours', ftPret:'Prets', ftLivre:'Livres',
+    search:'Chercher un client...',
+    emptyTitle:'Aucun client', empty:'Appuie sur + pour ajouter votre premier client.',
+    sheetTitle:'Nouveau client', sheetSub:'Remplissez les informations',
+    nom:'Nom complet', tel:'Numero WhatsApp', articles:'Articles', prix:'Prix total',
+    annuler:'Annuler', ajouter:'✅ Ajouter',
+    paramsTitle:'Parametres', paramsSub:'Personnalisez votre laverie',
+    lavNom:'Nom de la laverie', devise:'Devise (CDF, USD...)',
+    paramsSave:'💾 Sauvegarder',
+    factTitle:'Facture client', factSub:'Envoyez la facture via WhatsApp',
+    sendFact:'Envoyer la facture via WhatsApp', closeFact:'Fermer',
+    navClients:'Clients', navCaisse:'Caisse',
+    status:{'en-attente':'En attente','en-cours':'En cours','pret':'Pret','livre':'Livre'},
+    btnCours:'🔄 Lancer', btnPret:'✅ Pret', btnAttente:'↩ Retour', btnLivre:'📦 Livre', btnRetour:'↩ En cours',
+    btnWA:'💬 Message', btnFact:'🧾 Facture', btnDel:'🗑️ Supprimer',
+    toastAdd:'ajoute', toastStatut:'Statut mis a jour', toastDel:'supprime',
+    toastParams:'Parametres sauvegardes', toastWA:'WhatsApp ouvert',
+    erreur:'Veuillez saisir le nom et le numero',
+    chToday:'Total encaisse aujourd\'hui', chTodaySub:'clients livres aujourd\'hui',
+    chWeek:'Cette semaine', chMonth:'Ce mois', chClients:'Clients livres', chMoyenne:'Moyenne/client',
+    chHisto:'Historique par jour', chEmpty:'Aucune recette pour l\'instant.\nLes stats apparaitront quand des habits seront livres.',
+    factDoc:'FACTURE', factClient:'Client', factArt:'Articles', factPrix:'Prix total',
+    factPaye:'Paye', factReste:'Reste a payer', factTotal:'TOTAL',
+    factEtiquette:'N° Etiquette',
+    factCode:'Code de retrait', factMerci:'Merci de faire confiance a SecExpress !',
+    etiquette:'N° Etiquette habits', paye:'Montant paye', resteLbl:'Reste',
+    ticketNum:'Numero de ticket',
+    wa:{
       'en-attente': n=>`Bonjour ${n},\n\nVotre commande a bien ete enregistree chez SecExpress.\nNous vous contacterons quand vos habits seront prets.\n\nMerci !`,
-      'en-cours':   n=>`Bonjour ${n},\n\nVos habits sont en cours de lavage chez SecExpress.\nMerci de patienter, nous vous contacterons quand c\'est pret.\n\nMerci !`,
-      'livre':      n=>`Bonjour ${n},\n\nVos habits ont ete livres avec succes.\nMerci de faire confiance a SecExpress !\n\nA bientot !`
+      'en-cours':   n=>`Bonjour ${n},\n\nVos habits sont en cours de lavage chez SecExpress.\nNous vous contacterons quand c'est pret.\n\nMerci !`,
+      'livre':      n=>`Bonjour ${n},\n\nVos habits ont ete livres. Merci de faire confiance a SecExpress !\n\nA bientot !`
     }
   },
   rw: {
-    slogan: 'Gucunga imyambaro',
-    modifier: '⚙️ Igenamiterere',
+    slogan:'Gucunga imyambaro', modifier:'Igenamiterere',
     total:'Yose', attente:'Gutegereza', cours:'Igikorwa', pret:'Biteguye',
-    tabTous:'Yose', tabAttente:'Gutegereza', tabCours:'Igikorwa', tabPret:'Biteguye', tabLivre:'Byatanzwe',
-    search: 'Shakisha umukiriya...',
-    emptyTitle: 'Nta bakiriya baracyandikwa',
-    empty: 'Kanda buto y\'icyatsi kugirango wongeraho umukiriya wa mbere.',
-    emptyBtn: 'Ongeraho umukiriya',
-    modalTitle: 'Umukiriya mushya',
-    modalSub: 'Uzuza amakuru y\'umukiriya',
-    nom: 'Amazina yuzuye', tel: 'Nimero ya WhatsApp',
-    articles: 'Imyambaro (ikofu, ipantaro...)',
-    prixLabel: 'Igiciro cyose',
-    annuler: 'Reka', ajouter: 'Ongeraho',
-    lavTitle: 'Igenamiterere', lavSub: 'Hindura amakuru ya laverie yawe',
-    lavLabel: 'Izina rya laverie', deviseLabel: 'Ifaranga (RWF, USD...)',
-    lavSave: 'Bika',
-    factureTitle: 'Fagitire iteguye',
-    factureSub: 'Ohereza fagitire umukiriya kuri WhatsApp',
-    sendFacture: 'Ohereza fagitire kuri WhatsApp',
-    fermerFacture: 'Funga',
-    status: { 'en-attente':'Gutegereza','en-cours':'Igikorwa','pret':'Biteguye','livre':'Byatanzwe' },
-    btnCours: 'Tangira gukaraba',
-    btnPret: 'Imyambaro iteguye',
-    btnAttente: 'Subira mu gutegereza',
-    btnLivre: 'Yatanzwe',
-    btnRetour: 'Subira mu gikorwa',
-    btnWA: 'Ohereza ubutumwa',
-    btnFacture: 'Reba fagitire',
-    btnSuppr: 'Siba',
-    toastAjout: 'yongeweho neza',
-    toastStatut: 'Imiterere yahinduwe',
-    toastNom: 'Igenamiterere ribitswe',
-    toastWA: 'WhatsApp ifunguye',
-    toastSuppr: 'Umukiriya yasibwe',
-    erreur: 'Andika amazina n\'inomero',
-    factDocTitle: 'FAGITIRE',
-    factClient: 'Umukiriya',
-    factArticles: 'Imyambaro',
-    factPrix: 'Igiciro',
-    factTotal: 'IGITERANYO',
-    factCode: 'Kode yo gusubira',
-    factMerci: 'Murakoze gukoresha SecExpress !',
-    wa: {
+    ftTous:'Yose', ftAttente:'Gutegereza', ftCours:'Igikorwa', ftPret:'Biteguye', ftLivre:'Byatanzwe',
+    search:'Shakisha umukiriya...',
+    emptyTitle:'Nta bakiriya', empty:'Kanda + kugirango wongeraho umukiriya.',
+    sheetTitle:'Umukiriya mushya', sheetSub:'Uzuza amakuru',
+    nom:'Amazina yuzuye', tel:'Nimero ya WhatsApp', articles:'Imyambaro', prix:'Igiciro cyose',
+    annuler:'Reka', ajouter:'✅ Ongeraho',
+    paramsTitle:'Igenamiterere', paramsSub:'Hindura amakuru ya laverie',
+    lavNom:'Izina rya laverie', devise:'Ifaranga (RWF, USD...)',
+    paramsSave:'💾 Bika',
+    factTitle:'Fagitire y\'umukiriya', factSub:'Ohereza fagitire kuri WhatsApp',
+    sendFact:'Ohereza fagitire kuri WhatsApp', closeFact:'Funga',
+    navClients:'Abakiriya', navCaisse:'Amafaranga',
+    status:{'en-attente':'Gutegereza','en-cours':'Igikorwa','pret':'Biteguye','livre':'Byatanzwe'},
+    btnCours:'🔄 Tangira', btnPret:'✅ Biteguye', btnAttente:'↩ Subira', btnLivre:'📦 Byatanzwe', btnRetour:'↩ Igikorwa',
+    btnWA:'💬 Ubutumwa', btnFact:'🧾 Fagitire', btnDel:'🗑️ Siba',
+    toastAdd:'yongeweho', toastStatut:'Imiterere yahinduwe', toastDel:'yasibwe',
+    toastParams:'Igenamiterere ribitswe', toastWA:'WhatsApp ifunguye',
+    erreur:'Andika amazina n\'inomero',
+    chToday:'Amafaranga yinjiye uyu munsi', chTodaySub:'bakiriya batanzwe uyu munsi',
+    chWeek:'Iyi cyumweru', chMonth:'Uyu mwaka', chClients:'Bakiriya batanzwe', chMoyenne:'Hagati/umukiriya',
+    chHisto:'Amateka ku munsi', chEmpty:'Nta mafaranga arabonetse.\nAmafaranga azagaragara igihe imyambaro izatanzwe.',
+    factDoc:'FAGITIRE', factClient:'Umukiriya', factArt:'Imyambaro', factPrix:'Igiciro cyose',
+    factPaye:'Byishyuwe', factReste:'Bisigaye', factTotal:'IGITERANYO',
+    factEtiquette:'N° y\'urupapuro',
+    factCode:'Kode yo gusubira', factMerci:'Murakoze gukoresha SecExpress !',
+    etiquette:'N° y\'urupapuro rw\'imyambaro', paye:'Byishyuwe', resteLbl:'Bisigaye',
+    ticketNum:'Numero ya fagitire',
+    wa:{
       'en-attente': n=>`Muraho ${n},\n\nIturusha ryanyu ryakiririwe neza muri SecExpress.\nTuzabimenyesha igihe imyambaro yanyu izaba iteguye.\n\nMurakoze !`,
-      'en-cours':   n=>`Muraho ${n},\n\nImyambaro yanyu iri gukarawa muri SecExpress.\nMwihangane, tuzabimenyesha igihe bitegurwa.\n\nMurakoze !`,
-      'livre':      n=>`Muraho ${n},\n\nImyambaro yanyu yatanzwe neza.\nMurakoze gukoresha SecExpress !\n\nMugire amahoro !`
+      'en-cours':   n=>`Muraho ${n},\n\nImyambaro yanyu iri gukarawa muri SecExpress.\nTuzabimenyesha igihe bitegurwa.\n\nMurakoze !`,
+      'livre':      n=>`Muraho ${n},\n\nImyambaro yanyu yatanzwe. Murakoze gukoresha SecExpress !\n\nMugire amahoro !`
     }
   }
 };
@@ -958,324 +539,500 @@ const T = {
 let lang = localStorage.getItem('sec_lang') || 'fr';
 let clients = JSON.parse(localStorage.getItem('sec_clients') || '[]');
 let filter = 'tous';
-let currentFactureId = null;
+let currentView = 'clients';
+let currentFactId = null;
+let sheetOpen = false;
 
-// ── LANGUE ──
+// ══ UTILS ══
+const $= id => document.getElementById(id);
+const s= (id,v) => { const e=$( id); if(e) e.textContent=v; };
+const h= (id,v) => { const e=$(id); if(e) e.innerHTML=v; };
+
+// ══ LANGUE ══
 function setLang(l) {
-  lang = l;
-  localStorage.setItem('sec_lang', l);
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.lang-btn').forEach(b => { if(b.textContent === l.toUpperCase()) b.classList.add('active'); });
-  applyLang(); render();
+  lang=l; localStorage.setItem('sec_lang',l);
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.lang-btn').forEach(b=>{ if(b.textContent===l.toUpperCase()) b.classList.add('active'); });
+  applyLang(); render(); if(currentView==='caisse') renderCaisse();
 }
-
-function s(id, txt) { const el = document.getElementById(id); if(el) el.textContent = txt; }
-function h(id, htm) { const el = document.getElementById(id); if(el) el.innerHTML = htm; }
 
 function applyLang() {
-  const t = T[lang];
-  s('lbl-slogan', t.slogan); s('lbl-modifier', t.modifier);
-  s('lbl-total', t.total); s('lbl-attente', t.attente); s('lbl-cours', t.cours); s('lbl-pret', t.pret);
-  s('tab-tous-txt', t.tabTous); s('tab-attente-txt', t.tabAttente);
-  s('tab-encours-txt', t.tabCours); s('tab-pret-txt', t.tabPret); s('tab-livre-txt', t.tabLivre);
-  document.getElementById('search').placeholder = t.search;
-  s('lbl-empty-title', t.emptyTitle); s('lbl-empty', t.empty); s('lbl-empty-btn', t.emptyBtn);
-  s('lbl-modal-title', t.modalTitle); s('lbl-modal-sub', t.modalSub);
-  s('lbl-nom', t.nom); s('lbl-tel', t.tel); s('lbl-articles', t.articles); s('lbl-prix-label', t.prixLabel);
-  s('lbl-annuler', t.annuler); s('lbl-ajouter', '✅ ' + t.ajouter);
-  s('lbl-lav-title', t.lavTitle); s('lbl-lav-sub', t.lavSub);
-  s('lbl-lav-label', t.lavLabel); s('lbl-devise-label', t.deviseLabel);
-  s('lbl-lav-annuler', t.annuler); s('lbl-lav-save', '💾 ' + t.lavSave);
-  s('lbl-facture-title', t.factureTitle); s('lbl-facture-sub', t.factureSub);
-  s('lbl-send-facture', t.sendFacture); s('lbl-fermer-facture', t.fermerFacture);
-  const nom_ph = lang==='fr' ? 'exemple: Malunda Eveline' : 'urugero: Uwimana Jean';
-  const art_ph = lang==='fr' ? 'exemple: 3 chemises, 1 pantalon' : 'urugero: ipantaro 1, ikofu 3';
-  document.getElementById('input-nom').placeholder = nom_ph;
-  document.getElementById('input-note').placeholder = art_ph;
+  const t=T[lang];
+  s('lbl-slogan',t.slogan); s('lbl-modifier',t.modifier);
+  s('lbl-total',t.total); s('lbl-attente',t.attente); s('lbl-cours',t.cours); s('lbl-pret',t.pret);
+  s('ft-tous',t.ftTous); s('ft-attente',t.ftAttente); s('ft-cours',t.ftCours); s('ft-pret',t.ftPret);
+  $('search').placeholder=t.search;
+  s('lbl-empty-title',t.emptyTitle); s('lbl-empty',t.empty);
+  s('lbl-sheet-title',t.sheetTitle); s('lbl-sheet-sub',t.sheetSub);
+  s('lbl-nom',t.nom); s('lbl-tel',t.tel); s('lbl-articles',t.articles); s('lbl-prix',t.prix);
+  s('lbl-annuler',t.annuler); s('lbl-ajouter',t.ajouter);
+  s('lbl-params-title',t.paramsTitle); s('lbl-params-sub',t.paramsSub);
+  s('lbl-lav-nom',t.lavNom); s('lbl-devise',t.devise);
+  s('lbl-params-annuler',t.annuler); s('lbl-params-save',t.paramsSave);
+  s('lbl-fact-title',t.factTitle); s('lbl-fact-sub',t.factSub);
+  s('lbl-send-fact',t.sendFact); s('lbl-close-fact',t.closeFact);
+  s('nav-lbl-clients',t.navClients); s('nav-lbl-caisse',t.navCaisse);
+  s('lbl-etiquette', t.etiquette); s('lbl-paye', t.paye); s('lbl-reste-lbl', t.resteLbl);
+  s('lbl-ticket-num', t.ticketNum);
+  s('lbl-ch-today',t.chToday); s('lbl-ch-week',t.chWeek); s('lbl-ch-month',t.chMonth);
+  s('lbl-ch-clients',t.chClients); s('lbl-ch-moyenne',t.chMoyenne); s('lbl-ch-histo',t.chHisto);
+  $('input-nom').placeholder = lang==='fr'?'exemple: Malunda Eveline':'urugero: Uwimana Jean';
+  $('input-note').placeholder = lang==='fr'?'ex: 3 chemises, 1 pantalon':'urugero: ipantaro 1, ikofu 3';
 }
 
-// ── LAVERIE ──
-document.getElementById('laverie-name').textContent = localStorage.getItem('sec_lav_name') || 'Ma Laverie';
+// ══ LAVERIE ══
+$('laverie-name').textContent = localStorage.getItem('sec_lav_name') || 'Ma Laverie';
 
-function changeLaverie() {
-  document.getElementById('input-lav').value = localStorage.getItem('sec_lav_name') || '';
-  document.getElementById('input-devise').value = localStorage.getItem('sec_devise') || 'CDF';
-  document.getElementById('overlay-lav').classList.add('open');
-  setTimeout(() => document.getElementById('input-lav').focus(), 350);
+function openParams() {
+  $('input-lav').value = localStorage.getItem('sec_lav_name') || '';
+  $('input-devise').value = localStorage.getItem('sec_devise') || 'CDF';
+  $('params-sheet').classList.add('open');
+  $('params-overlay').classList.add('open');
+  setTimeout(()=>$('input-lav').focus(), 350);
 }
-function closeLav() { document.getElementById('overlay-lav').classList.remove('open'); }
-function closeLavOutside(e) { if(e.target===document.getElementById('overlay-lav')) closeLav(); }
-function saveLaverie() {
-  const n = document.getElementById('input-lav').value.trim();
-  const d = document.getElementById('input-devise').value.trim() || 'CDF';
+function closeParams() {
+  $('params-sheet').classList.remove('open');
+  $('params-overlay').classList.remove('open');
+}
+function saveParams() {
+  const n=$('input-lav').value.trim();
+  const d=$('input-devise').value.trim()||'CDF';
   if(!n) return;
-  localStorage.setItem('sec_lav_name', n);
-  localStorage.setItem('sec_devise', d);
-  document.getElementById('laverie-name').textContent = n;
-  closeLav();
-  showToast('🏪', T[lang].toastNom);
+  localStorage.setItem('sec_lav_name',n);
+  localStorage.setItem('sec_devise',d);
+  $('laverie-name').textContent=n;
+  closeParams(); showToast('🏪',T[lang].toastParams);
+}
+// Drag params sheet
+setupDrag('params-drag-handle','params-sheet', closeParams);
+
+// ══ NAVIGATION ══
+function showClients() {
+  currentView='clients';
+  $('list-view').style.display='';
+  $('caisse-view').classList.remove('visible');
+  $('filter-wrap').style.display='';
+  $('search-wrap').style.display='';
+  $('nav-clients').classList.add('active');
+  $('nav-caisse').classList.remove('active');
 }
 
-// ── FILTER ──
-function setFilter(f, el) {
-  filter = f;
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  render();
+function showCaisse() {
+  currentView='caisse';
+  $('list-view').style.display='none';
+  $('caisse-view').classList.add('visible');
+  $('filter-wrap').style.display='none';
+  $('search-wrap').style.display='none';
+  $('nav-caisse').classList.add('active');
+  $('nav-clients').classList.remove('active');
+  renderCaisse();
 }
 
-// ── MODAL AJOUT ──
-function openModal() {
-  document.getElementById('overlay').classList.add('open');
-  setTimeout(() => document.getElementById('input-nom').focus(), 350);
+// ══ BOTTOM SHEET (draggable) ══
+function toggleSheet() {
+  if(sheetOpen) closeSheet(); else openSheet();
 }
-function closeModal() {
-  document.getElementById('overlay').classList.remove('open');
-  ['input-nom','input-numero','input-note','input-prix'].forEach(id => document.getElementById(id).value='');
-}
-function closeModalOutside(e) { if(e.target===document.getElementById('overlay')) closeModal(); }
 
-// ── ADD ──
-function addClient() {
-  const nom = document.getElementById('input-nom').value.trim();
-  const numero = document.getElementById('input-numero').value.trim().replace(/\s+/g,'');
-  const note = document.getElementById('input-note').value.trim();
-  const prix = parseFloat(document.getElementById('input-prix').value) || 0;
-  if(!nom||!numero) { showToast('⚠️', T[lang].erreur); return; }
-  const token = 'SEC-' + Date.now().toString(36).toUpperCase();
-  clients.unshift({
-    id: Date.now(), nom, numero, note, prix, token,
-    statut: 'en-attente',
-    heure: new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}),
-    date: new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'})
+function openSheet() {
+  sheetOpen=true;
+  $('add-sheet').classList.add('open');
+  $('sheet-overlay').classList.add('open');
+  $('nav-add').textContent='×';
+  $('nav-add').style.background='#c01a1a';
+  refreshTicketPreview();
+  setTimeout(()=>$('input-nom').focus(),350);
+}
+
+function closeSheet() {
+  sheetOpen=false;
+  $('add-sheet').classList.remove('open');
+  $('sheet-overlay').classList.remove('open');
+  $('nav-add').textContent='+';
+  $('nav-add').style.background='var(--green)';
+  ['input-nom','input-numero','input-note','input-prix','input-paye','input-etiquette'].forEach(id=>$(id).value='');
+  $('reste-display').textContent='0';
+}
+
+// Drag to dismiss
+setupDrag('sheet-drag-handle','add-sheet', closeSheet);
+
+function setupDrag(handleId, sheetId, closeFn) {
+  const handle = $(handleId);
+  const sheet = $(sheetId);
+  if(!handle||!sheet) return;
+  let startY=0, curY=0, dragging=false;
+
+  handle.addEventListener('touchstart', e=>{
+    startY=e.touches[0].clientY; dragging=true;
+    sheet.style.transition='none';
+  }, {passive:true});
+
+  handle.addEventListener('touchmove', e=>{
+    if(!dragging) return;
+    curY=e.touches[0].clientY;
+    const dy=Math.max(0, curY-startY);
+    sheet.style.transform=`translateX(-50%) translateY(${dy}px)`;
+  }, {passive:true});
+
+  handle.addEventListener('touchend', ()=>{
+    dragging=false;
+    sheet.style.transition='';
+    const dy=curY-startY;
+    if(dy>80) { sheet.style.transform=''; closeFn(); }
+    else { sheet.style.transform='translateX(-50%) translateY(0)'; }
   });
-  save(); closeModal(); render();
-  showToast('✅', `${nom} ${T[lang].toastAjout}`);
 }
 
-// ── STATUS ──
-function setStatut(id, statut) {
-  const c = clients.find(x=>x.id===id); if(!c) return;
-  c.statut = statut; save(); render();
-  showToast('🔄', T[lang].toastStatut);
-  if(statut === 'pret') setTimeout(() => openFacture(id), 400);
+// ══ FILTER ══
+function setFilter(f,el) {
+  filter=f;
+  document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active'); render();
 }
 
-// ── FACTURE ──
+// ══ TICKET NUMBER ══
+function getNextTicket() {
+  const last = localStorage.getItem('sec_last_ticket') || 0;
+  const next = parseInt(last) + 1;
+  localStorage.setItem('sec_last_ticket', next);
+  return next;
+}
+
+function updateReste() {
+  const prix = parseFloat($('input-prix').value) || 0;
+  const paye = parseFloat($('input-paye').value) || 0;
+  const reste = Math.max(0, prix - paye);
+  $('reste-display').textContent = reste.toLocaleString();
+  $('reste-display').style.color = reste > 0 ? 'var(--red)' : 'var(--green)';
+  $('reste-display').style.borderColor = reste > 0 ? '#f5c5c5' : 'var(--gm)';
+  $('reste-display').style.background = reste > 0 ? 'var(--rl)' : 'var(--gl)';
+}
+
+function refreshTicketPreview() {
+  const last = parseInt(localStorage.getItem('sec_last_ticket') || 0);
+  $('ticket-preview').textContent = `N° ${String(last + 1).padStart(4, '0')}`;
+}
+
+// ══ ADD CLIENT ══
+function addClient() {
+  const nom=$('input-nom').value.trim();
+  const numero=$('input-numero').value.trim().replace(/\s+/g,'');
+  const note=$('input-note').value.trim();
+  const etiquette=$('input-etiquette').value.trim();
+  const prix=parseFloat($('input-prix').value)||0;
+  const paye=parseFloat($('input-paye').value)||0;
+  const reste=Math.max(0, prix-paye);
+  if(!nom||!numero){showToast('⚠️',T[lang].erreur);return;}
+  const ticketNum = getNextTicket();
+  const token=String(ticketNum).padStart(4,'0');
+  clients.unshift({
+    id:Date.now(),nom,numero,note,etiquette,prix,paye,reste,token,ticketNum,
+    statut:'en-attente',
+    heure:new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}),
+    date:new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'})
+  });
+  save(); closeSheet(); render();
+  showToast('✅',`${nom} ${T[lang].toastAdd} — N°${String(ticketNum).padStart(4,'0')}`);
+}
+
+// ══ STATUS ══
+function setStatut(id,statut) {
+  const c=clients.find(x=>x.id===id); if(!c) return;
+  c.statut=statut; save(); render();
+  showToast('🔄',T[lang].toastStatut);
+  if(statut==='pret') setTimeout(()=>openFacture(id),400);
+}
+
+// ══ FACTURE ══
 function openFacture(id) {
-  const c = clients.find(x=>x.id===id); if(!c) return;
-  if(!c.token) { c.token = 'SEC-' + c.id.toString(36).toUpperCase(); save(); }
-  currentFactureId = id;
-  const t = T[lang];
-  const lavName = localStorage.getItem('sec_lav_name') || 'SecExpress';
-  const devise = localStorage.getItem('sec_devise') || 'CDF';
-  const prix = c.prix || 0;
+  const c=clients.find(x=>x.id===id); if(!c) return;
+  if(!c.token){c.token=String(c.ticketNum||'0000').padStart(4,'0');save();}
+  currentFactId=id;
+  const t=T[lang];
+  const lav=localStorage.getItem('sec_lav_name')||'SecExpress';
+  const dev=localStorage.getItem('sec_devise')||'CDF';
+  const px=c.prix||0; const paye=c.paye||0; const reste=c.reste||0;
 
-  document.getElementById('facture-doc').innerHTML = `
-    <div class="facture-header">
-      <div>
-        <div class="facture-brand">Sec<span>Express</span></div>
-        <div class="facture-brand-sub">🏪 ${lavName}</div>
+  $('facture-doc').innerHTML=`
+    <div style="text-align:center;padding-bottom:14px;border-bottom:2px solid var(--ink);margin-bottom:14px;">
+      <div style="font-size:20px;font-weight:900;">Sec<span style="color:var(--green)">Express</span></div>
+      <div style="font-size:11px;color:var(--ink3);margin-top:2px;">🏪 ${lav}</div>
+      <div style="font-size:13px;font-weight:700;color:var(--ink3);margin-top:6px;">${t.factDoc} N° <span style="color:var(--ink);font-size:15px;">${c.token}</span></div>
+      <div style="font-size:11px;color:var(--ink3);margin-top:2px;">📅 ${c.date} — ${c.heure}</div>
+    </div>
+
+    <div style="margin-bottom:14px;">
+      <div style="font-size:16px;font-weight:800;">M. ${c.nom}</div>
+      <div style="font-size:12px;color:var(--ink3);margin-top:2px;">📱 ${c.numero}</div>
+    </div>
+
+    <div style="background:var(--bg);border-radius:10px;padding:12px 14px;margin-bottom:14px;">
+      <div style="font-size:13px;color:var(--ink2);">👕 ${c.note||'Habits'}</div>
+      ${c.etiquette?`<div style="font-size:13px;color:var(--ink3);margin-top:4px;">🔢 <strong style="font-family:monospace;color:var(--ink);">${c.etiquette}</strong></div>`:''}
+    </div>
+
+    <div style="border-top:1px solid var(--border);padding-top:12px;">
+      <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:14px;">
+        <span style="color:var(--ink3);">${t.factPrix}</span>
+        <span style="font-weight:700;">${px.toLocaleString()} ${dev}</span>
       </div>
-      <div>
-        <div class="facture-num-label">${t.factDocTitle}</div>
-        <div class="facture-num-val">${c.token}</div>
-        <div class="facture-date">📅 ${c.date} ${c.heure}</div>
+      <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:14px;border-bottom:1px solid var(--border);">
+        <span style="color:var(--green);">✅ ${t.factPaye}</span>
+        <span style="font-weight:700;color:var(--green);">${paye.toLocaleString()} ${dev}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:10px 0;font-size:16px;font-weight:900;">
+        <span style="color:${reste>0?'var(--red)':'var(--green)'};">⏳ ${t.factReste}</span>
+        <span style="color:${reste>0?'var(--red)':'var(--green)'};">${reste.toLocaleString()} ${dev}</span>
       </div>
     </div>
-    <div class="facture-row">
-      <span class="facture-row-label">👤 ${t.factClient}</span>
-      <span class="facture-row-val">${c.nom}</span>
-    </div>
-    <div class="facture-row">
-      <span class="facture-row-label">📱 Tel</span>
-      <span class="facture-row-val">${c.numero}</span>
-    </div>
-    <div class="facture-row">
-      <span class="facture-row-label">👕 ${t.factArticles}</span>
-      <span class="facture-row-val">${c.note || 'Habits'}</span>
-    </div>
-    <div class="facture-total-box">
-      <span class="facture-total-label">💰 ${t.factTotal}</span>
-      <span class="facture-total-val">${prix.toLocaleString()} ${devise}</span>
-    </div>
-    <div class="facture-code-box">
-      <span class="facture-code-label">🎫 ${t.factCode}</span>
-      <span class="facture-code-val">${c.token}</span>
-    </div>
-    <div class="facture-footer">${t.factMerci}</div>
-  `;
-  document.getElementById('overlay-facture').classList.add('open');
+
+    <div style="text-align:center;margin-top:10px;padding-top:10px;border-top:1px dashed var(--border);">
+      <div style="font-size:11px;color:var(--ink3);">${t.factCode}</div>
+      <div style="font-family:monospace;font-weight:900;font-size:16px;letter-spacing:2px;color:var(--ink);margin-top:2px;">${c.token}</div>
+    </div>`;
+  $('facture-overlay').classList.add('open');
 }
 
-function closeFacture() { document.getElementById('overlay-facture').classList.remove('open'); }
-function closeFactureOutside(e) { if(e.target===document.getElementById('overlay-facture')) closeFacture(); }
+function closeFacture(){$('facture-overlay').classList.remove('open');}
+function closeFactureOutside(e){if(e.target===$('facture-overlay'))closeFacture();}
 
 function sendFactureWA() {
-  const c = clients.find(x=>x.id===currentFactureId); if(!c) return;
-  const t = T[lang];
-  const lavName = localStorage.getItem('sec_lav_name') || 'SecExpress';
-  const devise = localStorage.getItem('sec_devise') || 'CDF';
-  const prix = c.prix || 0;
-  const sep = '================================';
-  const msg =
-`${sep}
-   SECEXPRESS - ${lavName.toUpperCase()}
-${sep}
-${t.factDocTitle}: ${c.token}
-Date: ${c.date} | ${c.heure}
-${sep}
-${t.factClient}: ${c.nom}
-Tel: ${c.numero}
-${sep}
-${t.factArticles}: ${c.note || 'Habits'}
-${sep}
-${t.factTotal}: ${prix.toLocaleString()} ${devise}
-${sep}
-${t.factCode}: ${c.token}
-${sep}
-${t.factMerci}`;
-
+  const c=clients.find(x=>x.id===currentFactId); if(!c) return;
+  const t=T[lang];
+  const lav=localStorage.getItem('sec_lav_name')||'SecExpress';
+  const dev=localStorage.getItem('sec_devise')||'CDF';
+  const px=c.prix||0; const paye=c.paye||0; const reste=c.reste||0;
+  const sep='================================';
+  const etiq=c.etiquette?`\n${t.factEtiquette}: ${c.etiquette}`:'';
+  const msg=`${sep}\n   SECEXPRESS - ${lav.toUpperCase()}\n${sep}\n${t.factDoc}: ${c.token}\nDate: ${c.date} | ${c.heure}\n${sep}\nM. ${c.nom}\nTel: ${c.numero}\n${sep}\n${t.factArt}: ${c.note||'Habits'}${etiq}\n${sep}\n${t.factPrix}: ${px.toLocaleString()} ${dev}\n${t.factPaye}: ${paye.toLocaleString()} ${dev}\n${t.factReste}: ${reste.toLocaleString()} ${dev}\n${sep}\n${t.factTotal}: ${px.toLocaleString()} ${dev}\n${sep}\n${t.factCode}: ${c.token}\n${sep}\n${t.factMerci}`;
   window.open(`https://wa.me/${c.numero}?text=${encodeURIComponent(msg)}`, '_blank');
-  showToast('💬', T[lang].toastWA);
+  showToast('💬',T[lang].toastWA);
 }
 
-// ── WA normal ──
+// ══ WA ══
 function sendWA(id) {
-  const c = clients.find(x=>x.id===id); if(!c) return;
-  if(c.statut === 'pret') { openFacture(id); return; }
-  const msg = (T[lang].wa[c.statut] || T[lang].wa['en-cours'])(c.nom);
-  window.open(`https://wa.me/${c.numero}?text=${encodeURIComponent(msg)}`, '_blank');
-  showToast('💬', T[lang].toastWA);
+  const c=clients.find(x=>x.id===id); if(!c) return;
+  if(c.statut==='pret'){openFacture(id);return;}
+  const msg=(T[lang].wa[c.statut]||T[lang].wa['en-cours'])(c.nom);
+  window.open(`https://wa.me/${c.numero}?text=${encodeURIComponent(msg)}`,'_blank');
+  showToast('💬',T[lang].toastWA);
 }
 
-// ── DELETE ──
+// ══ DELETE ══
 function deleteClient(id) {
-  if(!confirm(lang==='fr' ? 'Supprimer ce client ?' : 'Siba uyu mukiriya ?')) return;
-  const c = clients.find(x=>x.id===id);
-  clients = clients.filter(x=>x.id!==id);
-  save(); render();
-  showToast('🗑️', T[lang].toastSuppr);
+  if(!confirm(lang==='fr'?'Supprimer ce client ?':'Siba uyu mukiriya ?')) return;
+  const c=clients.find(x=>x.id===id);
+  clients=clients.filter(x=>x.id!==id); save(); render();
+  showToast('🗑️',`${c?.nom||'—'} ${T[lang].toastDel}`);
 }
 
-function save() { localStorage.setItem('sec_clients', JSON.stringify(clients)); }
+function save(){localStorage.setItem('sec_clients',JSON.stringify(clients));}
 
-// ── RENDER ──
+// ══ RENDER CLIENTS ══
 function render() {
-  const t = T[lang];
-  const q = document.getElementById('search').value.toLowerCase();
-  let filtered = filter==='tous' ? clients : clients.filter(c=>c.statut===filter);
-  if(q) filtered = filtered.filter(c=>c.nom.toLowerCase().includes(q)||c.numero.includes(q));
+  const t=T[lang];
+  const q=$('search').value.toLowerCase();
+  let filtered=filter==='tous'?clients:clients.filter(c=>c.statut===filter);
+  if(q) filtered=filtered.filter(c=>c.nom.toLowerCase().includes(q)||c.numero.includes(q));
 
-  // Stats
-  const cn = (s) => clients.filter(c=>c.statut===s).length;
-  document.getElementById('stat-total').textContent = clients.length;
-  document.getElementById('stat-attente').textContent = cn('en-attente');
-  document.getElementById('stat-cours').textContent = cn('en-cours');
-  document.getElementById('stat-pret').textContent = cn('pret');
+  const cn=s=>clients.filter(c=>c.statut===s).length;
+  $('stat-total').textContent=clients.length;
+  $('stat-attente').textContent=cn('en-attente');
+  $('stat-cours').textContent=cn('en-cours');
+  $('stat-pret').textContent=cn('pret');
+  $('cnt-tous').textContent=clients.length;
+  $('cnt-attente').textContent=cn('en-attente');
+  $('cnt-cours').textContent=cn('en-cours');
+  $('cnt-pret').textContent=cn('pret');
 
-  // Tab counts
-  document.getElementById('count-tous').textContent = clients.length;
-  document.getElementById('count-attente').textContent = cn('en-attente');
-  document.getElementById('count-encours').textContent = cn('en-cours');
-  document.getElementById('count-pret').textContent = cn('pret');
-  document.getElementById('count-livre').textContent = cn('livre');
-
-  const list = document.getElementById('client-list');
-  const empty = document.getElementById('empty-state');
-
-  if(filtered.length===0) { empty.style.display='flex'; list.innerHTML=''; return; }
+  const list=$('client-list');
+  const empty=$('empty-state');
+  if(filtered.length===0){empty.style.display='flex';list.innerHTML='';return;}
   empty.style.display='none';
 
-  const devise = localStorage.getItem('sec_devise') || 'CDF';
+  const dev=localStorage.getItem('sec_devise')||'CDF';
 
-  list.innerHTML = filtered.map(c => {
-    const initials = c.nom.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
-    const prix = c.prix ? `${Number(c.prix).toLocaleString()} ${devise}` : '';
-    const s = c.statut;
+  const btns=(c)=>{
+    const s=c.statut;
+    if(s==='en-attente') return `
+      <div class="card-actions">
+        <button class="btn-a btn-cours" onclick="setStatut(${c.id},'en-cours')">${t.btnCours}</button>
+        <button class="btn-a btn-wa" onclick="sendWA(${c.id})">${t.btnWA}</button>
+        <button class="btn-a btn-del btn-full" onclick="deleteClient(${c.id})">${t.btnDel}</button>
+      </div>`;
+    if(s==='en-cours') return `
+      <div class="card-actions">
+        <button class="btn-a btn-pret" onclick="setStatut(${c.id},'pret')">${t.btnPret}</button>
+        <button class="btn-a btn-attente" onclick="setStatut(${c.id},'en-attente')">${t.btnAttente}</button>
+        <button class="btn-a btn-wa" onclick="sendWA(${c.id})">${t.btnWA}</button>
+        <button class="btn-a btn-del" onclick="deleteClient(${c.id})">${t.btnDel}</button>
+      </div>`;
+    if(s==='pret') return `
+      <div class="card-actions">
+        <button class="btn-a btn-facture btn-full" onclick="openFacture(${c.id})">${t.btnFact}</button>
+        <button class="btn-a btn-cours btn-full" onclick="setStatut(${c.id},'en-cours')">${t.btnRetour}</button>
+      </div>`;
+    return `
+      <div class="card-actions">
+        <button class="btn-a btn-facture" onclick="openFacture(${c.id})">${t.btnFact}</button>
+        <button class="btn-a btn-del" onclick="deleteClient(${c.id})">${t.btnDel}</button>
+      </div>`;
+  };
 
-    // Boutons selon statut — grands et clairs
-    let actionBtns = '';
-    if(s === 'en-attente') {
-      actionBtns = `
-        <div class="card-actions">
-          <button class="btn-action btn-cours" onclick="setStatut(${c.id},'en-cours')">🔄 ${t.btnCours}</button>
-          <button class="btn-action btn-wa" onclick="sendWA(${c.id})">💬 ${t.btnWA}</button>
-        </div>
-        <div style="margin-top:8px">
-          <button class="btn-action btn-del" style="width:100%" onclick="deleteClient(${c.id})">🗑️ ${t.btnSuppr}</button>
-        </div>`;
-    } else if(s === 'en-cours') {
-      actionBtns = `
-        <div class="card-actions">
-          <button class="btn-action btn-pret" onclick="setStatut(${c.id},'pret')">✅ ${t.btnPret}</button>
-          <button class="btn-action btn-attente" onclick="setStatut(${c.id},'en-attente')">↩️ ${t.btnAttente}</button>
-        </div>
-        <div style="margin-top:8px;display:flex;gap:8px;">
-          <button class="btn-action btn-wa" style="flex:1" onclick="sendWA(${c.id})">💬 ${t.btnWA}</button>
-          <button class="btn-action btn-del" style="flex:1" onclick="deleteClient(${c.id})">🗑️ ${t.btnSuppr}</button>
-        </div>`;
-    } else if(s === 'pret') {
-      actionBtns = `
-        <div class="card-actions">
-          <button class="btn-action btn-livre" onclick="setStatut(${c.id},'livre')">📦 ${t.btnLivre}</button>
-          <button class="btn-action btn-facture" onclick="openFacture(${c.id})">🧾 ${t.btnFacture}</button>
-        </div>
-        <div style="margin-top:8px">
-          <button class="btn-action btn-cours" style="width:100%" onclick="setStatut(${c.id},'en-cours')">↩️ ${t.btnRetour}</button>
-        </div>`;
-    } else {
-      actionBtns = `
-        <div class="card-actions">
-          <button class="btn-action btn-facture" onclick="openFacture(${c.id})">🧾 ${t.btnFacture}</button>
-          <button class="btn-action btn-del" onclick="deleteClient(${c.id})">🗑️ ${t.btnSuppr}</button>
-        </div>`;
-    }
-
+  list.innerHTML=filtered.map(c=>{
+    const ini=c.nom.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+    const px=c.prix?`${Number(c.prix).toLocaleString()} ${dev}`:'';
     return `
       <div class="client-card">
-        <div class="card-color-bar ${s}"></div>
+        <div class="card-bar ${c.statut}"></div>
         <div class="card-body">
           <div class="card-top">
-            <div class="avatar ${s}">${initials}</div>
+            <div class="avatar ${c.statut}">${ini}</div>
             <div class="client-info">
               <div class="client-name">${c.nom}</div>
-              <div class="client-tel">📱 ${c.numero} &nbsp;·&nbsp; 🕐 ${c.heure}</div>
+              <div class="client-tel">📱 ${c.numero} · 🕐 ${c.heure}</div>
             </div>
-            <span class="badge ${s}">${t.status[s]}</span>
+            <span class="badge ${c.statut}">${t.status[c.statut]}</span>
           </div>
-          ${c.note ? `<div class="card-note">👕 ${c.note}</div>` : ''}
-          ${prix ? `<div class="card-prix">💰 ${prix}</div>` : ''}
-          ${actionBtns}
+          ${c.note?`<div class="card-note">👕 ${c.note}${c.etiquette?` &nbsp;·&nbsp; 🔢 <strong>${c.etiquette}</strong>`:''}</div>`:''}
+          ${c.etiquette&&!c.note?`<div class="card-note">🔢 <strong>${c.etiquette}</strong></div>`:''}
+          ${px?`<div class="card-prix" style="display:flex;justify-content:space-between;align-items:center;">
+            <span>💰 ${px}</span>
+            ${c.reste>0?`<span style="font-size:12px;color:var(--red);background:var(--rl);padding:3px 8px;border-radius:10px;">Reste: ${Number(c.reste).toLocaleString()}</span>`:'<span style="font-size:12px;color:var(--green);">✅ Solde</span>'}
+          </div>`:''}
+          ${btns(c)}
         </div>
       </div>`;
   }).join('');
 }
 
-function showToast(icon, msg) {
-  const t = document.getElementById('toast');
-  document.getElementById('toast-icon').textContent = icon;
-  document.getElementById('toast-msg').textContent = msg;
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'), 2500);
-}
+// ══ RENDER CAISSE ══
+function renderCaisse() {
+  const t=T[lang];
+  const dev=localStorage.getItem('sec_devise')||'CDF';
+  const livres=clients.filter(c=>c.statut==='pret'&&c.prix);
+  const today=new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'});
+  const now=new Date();
+  const startWeek=new Date(now); startWeek.setDate(now.getDate()-now.getDay());
+  const startMonth=new Date(now.getFullYear(),now.getMonth(),1);
+  const pd=d=>{ if(!d) return new Date(0); const p=d.split('/'); return new Date(`${p[2]}-${p[1]}-${p[0]}`); };
 
-// ── SERVICE WORKER ──
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').catch(() => {});
-  });
-}
-applyLang();
-setLang(lang);
-render();
+  const todayC=livres.filter(c=>c.date===today);
+  const todayT=todayC.reduce((s,c)=>s+Number(c.prix),0);
+  const weekT=livres.filter(c=>pd(c.date)>=startWeek).reduce((s,c)=>s+Number(c.prix),0);
+  const monthT=livres.filter(c=>pd(c.date)>=startMonth).reduce((s,c)=>s+Number(c.prix),0);
+  const totalC=livres.length;
+  const moy=totalC>0?Math.round(livres.reduce((s,c)=>s+Number(c.prix),0)/totalC):0;
 
-document.addEventListener('keydown', e => {
-  if(e.key==='Enter') {
-    if(document.getElementById('overlay').classList.contains('open')) addClient();
-    if(document.getElementById('overlay-lav').classList.contains('open')) saveLaverie();
+  $('ch-today-amt').textContent=`${todayT.toLocaleString()} ${dev}`;
+  h('ch-today-sub',`${todayC.length} ${t.chTodaySub}`);
+  $('ch-week').textContent=todayT.toLocaleString();
+  $('ch-month').textContent=monthT.toLocaleString();
+  $('ch-clients').textContent=totalC;
+  $('ch-moyenne').textContent=moy.toLocaleString();
+
+  // Par jour
+  const parJour={};
+  livres.forEach(c=>{ const d=c.date||today; if(!parJour[d]) parJour[d]={total:0,nb:0}; parJour[d].total+=Number(c.prix); parJour[d].nb++; });
+  const jours=Object.keys(parJour).sort((a,b)=>pd(b)-pd(a));
+  const emojis=['🌟','✨','💫','⭐','🎯','🔥','💪','👑'];
+
+  if(jours.length===0) {
+    $('caisse-jours').innerHTML=`<div class="caisse-empty"><div class="caisse-empty-icon">💸</div><div class="caisse-empty-txt">${t.chEmpty}</div></div>`;
+    return;
   }
-});
+
+  $('caisse-jours').innerHTML=jours.map((j,i)=>{
+    const d=parJour[j];
+    const isT=j===today;
+    return `
+      <div class="jour-row">
+        <div class="jour-dot">${isT?'📅':emojis[i%emojis.length]}</div>
+        <div class="jour-info">
+          <div class="jour-date">${isT?(lang==='fr'?'Aujourd\'hui':'Uyu munsi'):j}</div>
+          <div class="jour-nb">${d.nb} client${d.nb>1?'s':''}</div>
+        </div>
+        <div>
+          <div class="jour-montant">${d.total.toLocaleString()}</div>
+          <div class="jour-devise">${dev}</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function showToast(icon,msg) {
+  $('ti').textContent=icon; $('tm').textContent=msg;
+  $('toast').classList.add('show');
+  setTimeout(()=>$('toast').classList.remove('show'),2500);
+}
+
+// ══ ABONNEMENT ══
+const ESSAI_JOURS = 14;
+const WA_ADMIN = '243902319893';
+
+function checkAbonnement() {
+  // Date d'installation — enregistrée une seule fois
+  let installDate = localStorage.getItem('sec_install_date');
+  if(!installDate) {
+    installDate = new Date().toISOString();
+    localStorage.setItem('sec_install_date', installDate);
+  }
+
+  // Si abonnement actif (débloqué par toi)
+  const abonne = localStorage.getItem('sec_abonne');
+  if(abonne === 'oui') return; // tout va bien
+
+  // Calcul des jours écoulés
+  const debut = new Date(installDate);
+  const maintenant = new Date();
+  const joursEcoules = Math.floor((maintenant - debut) / (1000 * 60 * 60 * 24));
+  const joursRestants = ESSAI_JOURS - joursEcoules;
+
+  if(joursEcoules >= ESSAI_JOURS) {
+    // Expiration — bloquer l'app
+    showExpireScreen(joursEcoules);
+  } else if(joursRestants <= 3) {
+    // Avertissement 3 jours avant
+    showToast('⚠️', lang==='fr' ? `${joursRestants} jour(s) d'essai restant` : `Iminsi ${joursRestants} isigaye`);
+  }
+}
+
+function showExpireScreen(joursEcoules) {
+  const screen = $('expire-screen');
+  screen.classList.add('show');
+
+  // Bloquer le bouton retour Android
+  window.history.pushState(null, '', window.location.href);
+  window.addEventListener('popstate', () => {
+    window.history.pushState(null, '', window.location.href);
+  });
+
+  // Textes selon langue
+  if(lang === 'rw') {
+    $('exp-title').textContent = 'Inshuro yarangiye';
+    $('exp-text').innerHTML = 'Igihe cyo kugerageza cyarangiye.<br>Ongera kwiyandikisha kugirango ukomeze gukoresha SecExpress.';
+    $('exp-days').innerHTML = `Iminsi <strong>${joursEcoules}</strong> kuva utangiye gukoresha SecExpress.`;
+    $('exp-btn').textContent = 'Ongera kwiyandikisha';
+    $('exp-footer').innerHTML = 'Ugaceka buto, uzajya kuri WhatsApp<br>kugirango utumanahane na SecExpress.';
+  } else {
+    $('exp-days').innerHTML = `Vous utilisez SecExpress depuis <strong>${joursEcoules} jours</strong>.`;
+  }
+}
+
+function reabonner() {
+  const lavName = localStorage.getItem('sec_lav_name') || 'Ma Laverie';
+  const msg = lang === 'fr'
+    ? `Bonjour, je souhaite me reabonner a SecExpress pour ma laverie "${lavName}". Merci !`
+    : `Muraho, ndashaka kongera kwiyandikisha kuri SecExpress ya laverie yanjye "${lavName}". Murakoze !`;
+  window.open(`https://wa.me/${WA_ADMIN}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+// ══ SW ══
+if('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+
+// ══ INIT ══
+applyLang(); setLang(lang); render();
+checkAbonnement();
 </script>
 </body>
 </html>
